@@ -1,0 +1,489 @@
+/* ============================================================
+   Home screen — "iPhone 16 - 1" (1:2)
+   Device shell, iOS chrome, scroller and tab bar live in
+   shell.css, shared with every other screen.
+   ============================================================ */
+
+@import url("shell.css");
+
+/* ---- Greeting --------------------------------------------- */
+.greeting-hey {
+  position: absolute;
+  left: 24px;
+  top: 86px;
+  width: 38px;
+  height: 22px;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--text-500);
+}
+
+.greeting-name {
+  position: absolute;
+  left: 24px;
+  top: 110px;
+  width: 84px;
+  height: 31px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 31px;
+  color: #000000;
+}
+
+/* ---- Add New Visit ---------------------------------------- */
+.btn-add-visit {
+  position: absolute;
+  left: 233px;
+  top: 109px;
+  width: 136px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--blue);
+  font-family: inherit;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.btn-add-visit:hover  { filter: brightness(1.06); }
+.btn-add-visit:active { transform: scale(0.98); }
+
+/* 18x18 node; the exported SVG carries a 1px stroke overhang each
+   side, so it renders 20x20 offset by -1. */
+.btn-add-visit__icon {
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.btn-add-visit__label {
+  position: absolute;
+  left: 37px;
+  top: 8px;
+  width: 84px;
+  height: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  color: #ffffff;
+  text-align: left;
+}
+
+/* ---- Upcoming visit card ---------------------------------- */
+.visit-card,
+.medicine { box-shadow: inset 0 0 0 0.5px var(--hairline), var(--card-shadow); }
+
+.visit-card {
+  left: 24px;
+  top: 161px;
+  width: 345px;
+  height: 165px;
+}
+
+
+/* Leading model — every text node in this card reports `leading: normal`
+   in Figma, and the designer then dragged the BOX shorter than the line
+   it holds: a 12px line whose natural box is 18px is drawn 13px tall.
+   Figma top-aligns text in a fixed box, so the first baseline sits one
+   ascent below `top` and the glyphs simply overhang the bottom edge.
+
+   Setting line-height to the box height instead — which is what these
+   rules used to do — makes CSS distribute NEGATIVE half-leading and
+   vertically centre the glyphs, lifting each line by a different amount
+   depending on its font size. That is precisely what pulled "24 OCT"
+   out of line with "Hedgewar hospital": the 20px line rose 3px, the
+   12px line only 1.5px, so the date ended up hanging 1.5px low. With
+   `normal` both baselines land on 68, exactly as drawn.
+
+   The `height` declarations below are kept: they are the Figma box, and
+   they still describe the node even though the text overhangs them. */
+.visit-card__eyebrow {
+  position: absolute;
+  left: 20px;
+  top: 16px;
+  width: 92px;
+  height: 16px;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--text-400);
+}
+
+/* Helper assigned — 101 x 20, content 81 + 10px padding each side */
+.chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  padding: 0 10px;
+  border-radius: var(--radius-chip);
+}
+
+.chip--helper {
+  left: 224px;
+  top: 14px;
+  background: var(--chip-helper-bg);
+}
+
+.chip__label {
+  width: 81px;
+  font-size: 10px;
+  line-height: 15px;
+  color: var(--chip-helper-ink);
+  white-space: nowrap;
+}
+
+.visit-card__date {
+  position: absolute;
+  left: 20px;
+  top: 55px;
+  width: 43px;
+  height: 13px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--text-600);
+}
+
+.visit-card__place {
+  position: absolute;
+  left: 85px;
+  top: 46px;
+  width: 198px;
+  height: 22px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--text-900);
+}
+
+.visit-card__doctor {
+  position: absolute;
+  left: 85px;
+  top: 76px;
+  width: 141px;
+  height: 13px;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--text-700);
+}
+
+.visit-card__divider {
+  position: absolute;
+  left: 20px;
+  top: 105px;
+  width: 305px;
+  height: 0.5px;
+  display: block;
+}
+
+.visit-card__reason-label {
+  position: absolute;
+  left: 20px;
+  top: 114px;
+  width: 45px;
+  height: 11px;
+  font-size: 10px;
+  line-height: normal;
+  color: var(--text-400);
+}
+
+.visit-card__reason {
+  position: absolute;
+  left: 20px;
+  top: 131px;
+  width: 191px;
+  height: 15px;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--text-700);
+}
+
+/* ---- Status line -----------------------------------------
+   Sits between the visit card and the vitals. The sub-line is the
+   one italic in the file — Poppins Italic, so the font request now
+   asks for the ital axis. */
+.status__headline {
+  position: absolute;
+  left: 24px;
+  top: 350px;
+  width: 206px;
+  height: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #000000;
+}
+
+.status__divider {
+  position: absolute;
+  left: 24px;
+  top: 380px;
+  width: 345px;
+  height: 0.5px;
+  display: block;
+}
+
+.status__sub {
+  position: absolute;
+  left: 24px;
+  top: 392px;
+  width: 254px;
+  height: 14px;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 14px;
+  color: var(--text-600);
+}
+
+/* ---- Vitals ------------------------------------------------ */
+.vital {
+  background: var(--surface-vital);
+  border: 2px solid var(--blue-border);
+}
+
+.vital--bp         { left: 24px;  top: 457px; width: 209px; height: 117px; }
+.vital--movement   { left: 249px; top: 457px; width: 121px; height: 117px; }
+.vital--sugar      { left: 24px;  top: 590px; width: 197px; height: 117px; }
+.vital--creatinine { left: 237px; top: 590px; width: 132px; height: 117px; }
+
+/* Movement and Sugar are filled with the brand blue; their text
+   inverts to the on-blue ramp. */
+.vital.is-filled { background: var(--blue); }
+
+.vital__title {
+  position: absolute;
+  left: 18px;
+  top: 10px;
+  height: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--text-900);
+}
+
+.vital__reading {
+  position: absolute;
+  left: 18px;
+  top: 50px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.vital__value {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 22px;
+  color: var(--blue);
+}
+
+.vital__unit {
+  font-size: 10px;
+  line-height: 11px;
+  color: var(--text-400);
+}
+
+.vital__meta {
+  position: absolute;
+  left: 18px;
+  top: 84px;
+  height: 11px;
+  font-size: 10px;
+  line-height: 11px;
+  color: var(--text-500);
+}
+
+.vital.is-filled .vital__title { color: var(--on-blue-title); }
+.vital.is-filled .vital__value { color: var(--on-blue-value); }
+.vital.is-filled .vital__unit  { color: var(--on-blue-unit); }
+.vital.is-filled .vital__meta  { color: var(--on-blue-value); }
+
+/* Per-card offsets, exactly as measured in Figma */
+.vital--bp .vital__title,
+.vital--bp .vital__reading,
+.vital--bp .vital__meta         { left: 17px; }
+.vital--bp .vital__reading      { gap: 1px; }
+.vital--movement .vital__title,
+.vital--movement .vital__reading,
+.vital--movement .vital__meta   { left: 20px; }
+.vital--creatinine .vital__meta { left: 17px; }
+
+/* Creatinine stacks its unit under the value instead of beside it */
+.vital--creatinine .vital__reading {
+  top: 37px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 40px;
+}
+.vital--creatinine .vital__value { width: 40px; }
+.vital--creatinine .vital__unit  { width: 40px; }
+
+.vital__edit { position: absolute; display: block; }
+.vital__edit--bp         { left: 171px; top: 14px; width: 16px;   height: 16px; }
+.vital__edit--sugar      { left: 163px; top: 14px; width: 12.5px; height: 12.5px; }
+.vital__edit--creatinine { left: 100px; top: 14px; width: 12.5px; height: 12.5px; }
+
+/* ---- Target readout ----------------------------------------
+   The reference range each reading is measured against. On the
+   two filled cards it inverts to the on-blue ramp. */
+.vital__target-label {
+  position: absolute;
+  height: 9px;
+  font-size: 8px;
+  line-height: 9px;
+  color: var(--text-400);
+  white-space: nowrap;      /* these are spans on the Creatinine card,
+                               so they miss the .screen p nowrap rule */
+}
+
+.vital__target-value {
+  position: absolute;
+  height: 13px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 13px;
+  color: var(--text-700);
+  white-space: nowrap;
+}
+
+.vital--bp .vital__target-label { left: 149px; top: 45px; width: 36px; }
+.vital--bp .vital__target-value { left: 149px; top: 59px; width: 38px; }
+
+.vital--sugar .vital__target-label { left: 134px; top: 45px; width: 36px; color: var(--on-blue-title); }
+.vital--sugar .vital__target-value { left: 134px; top: 59px; width: 41px; color: #f2f2f2; }
+
+/* Creatinine groups its two lines, so they position as one stack */
+.vital__target {
+  position: absolute;
+  left: 78px;
+  top: 46px;
+  width: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.vital__target .vital__target-label,
+.vital__target .vital__target-value { position: relative; left: auto; top: auto; width: 38px; }
+
+/* Trend arrow — BP only */
+.vital__trend {
+  position: absolute;
+  left: 134px;
+  top: 62px;
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+/* ---- Medicine log ----------------------------------------- */
+.medicine {
+  left: 24px;
+  top: 727px;
+  width: 345px;
+  height: 152px;
+}
+
+.medicine__title {
+  position: absolute;
+  left: 20px;
+  top: 16px;
+  width: 106px;
+  height: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--text-900);
+}
+
+.legend {
+  position: absolute;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legend--taken  { left: 162px; width: 45px; }
+.legend--missed { left: 215px; width: 50px; }
+.legend--notyet { left: 273px; width: 52px; }
+
+.legend__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+}
+.legend--taken  .legend__swatch { background: var(--dose-taken); }
+.legend--missed .legend__swatch { background: var(--dose-missed); }
+.legend--notyet .legend__swatch { background: var(--dose-upcoming); }
+
+.legend__label {
+  height: 14px;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--text-600);
+  white-space: nowrap;
+}
+.legend--taken  .legend__label { width: 36px; }
+.legend--missed .legend__label { width: 42px; }
+.legend--notyet .legend__label { width: 44px; }
+
+.medicine__meal {
+  position: absolute;
+  left: 22px;
+  width: 9px;
+  height: 16px;
+  font-size: 10px;
+  line-height: 16px;
+  color: var(--text-600);
+}
+
+.medicine__meal--d { top: 64px; }
+.medicine__meal--l { top: 80px; }
+.medicine__meal--b { top: 96px; }
+
+.medicine__pills {
+  position: absolute;
+  left: 36px;
+  top: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.medicine__pill {
+  display: block;
+  width: 30px;
+  height: 45px;
+  flex-shrink: 0;
+}
+
+.medicine__day {
+  position: absolute;
+  top: 117px;
+  height: 16px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-600);
+}
+
+.medicine__day.is-upcoming { color: var(--text-200); }
+
+.medicine__day--mon { left: 38px;  width: 26px; }
+.medicine__day--tue { left: 81px;  width: 23px; }
+.medicine__day--wed { left: 121px; width: 28px; }
+.medicine__day--thu { left: 166px; width: 22px; }
+.medicine__day--fri { left: 210px; width: 15px; }
+.medicine__day--sat { left: 250px; width: 20px; }
+.medicine__day--sun { left: 291px; width: 23px; }
+
+
+/* The Add New Visit pill is a link now, not a button. */
+a.btn-add-visit { display: block; text-decoration: none; }

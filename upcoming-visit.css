@@ -1,0 +1,326 @@
+/* ============================================================
+   Upcoming visit detail — the "maximised" view of the 24 OCT card.
+
+   The header is the same component as the 28 SEP view ("iPhone 16 - 3",
+   4:262): caret 18/113, title 55/110, eyebrow 24/177, status chip on
+   the right at 175, date 24/195, hospital 24/237, reason 24/308, rule
+   24/374, body from 389. Those coordinates are reproduced exactly so
+   the two screens don't shift when you move between them.
+
+   Below the rule they diverge. A visit that hasn't happened has no
+   summary, no prescription and no recording — those blocks describe an
+   event in the past. What it does have is the arrangement: when, who is
+   taking Aai, what will be asked, what will be tested, and who knows.
+
+   The header is absolutely positioned (to hold those exact offsets);
+   the body is a flow column, like the Add-visit screens.
+   ============================================================ */
+
+@import url("shell.css");
+
+.screen__canvas { height: auto; min-height: 852px; padding-bottom: 96px; }
+
+/* ---- Header ------------------------------------------------- */
+.uv-head { position: relative; height: 389px; }
+
+/* Caret centred on the title's cap band (115–135, centre 125), the
+   same correction made on the other detail screens. */
+.uv-back {
+  position: absolute;
+  left: 18px;
+  top: 113px;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+.uv-back img { width: 24px; height: 24px; display: block; }
+.uv-back::after { content: ""; position: absolute; inset: -10px; }
+.uv-back:active { transform: scale(0.92); }
+
+.uv-title {
+  position: absolute;
+  left: 55px;
+  top: 110px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 31px;
+  color: #000000;
+}
+
+/* Delete — a plain text control rather than a filled button. It is
+   destructive, so it should be findable but never the thing the eye
+   lands on first; the CTA weight in this app belongs to the blue.
+   #c0392b rather than the app's #ed4546: the brand red measures only
+   3.8:1 on this ground, which fails at a 12px label, and this one
+   measures 5.0:1. Centred on the same 125 as the caret and the title. */
+.uv-delete {
+  position: absolute;
+  right: 24px;
+  top: 113px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: #c0392b;
+  cursor: pointer;
+}
+.uv-delete::after { content: ""; position: absolute; inset: -10px -8px; }
+.uv-delete svg { display: block; }
+.uv-delete:active { transform: scale(0.96); }
+
+.uv-ago {
+  position: absolute;
+  left: 24px;
+  top: 177px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-400);
+}
+
+.uv-date {
+  position: absolute;
+  left: 24px;
+  top: 195px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 15px;
+  color: var(--text-600);
+}
+
+.uv-hospital {
+  position: absolute;
+  left: 24px;
+  top: 237px;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.uv-hospital__name   { font-size: 20px; font-weight: 500; line-height: 22px; color: var(--text-900); }
+.uv-hospital__doctor { font-size: 12px; line-height: 13px; color: var(--text-700); }
+
+.uv-reason {
+  position: absolute;
+  left: 24px;
+  top: 308px;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.uv-reason__label { font-size: 10px; line-height: 11px; color: var(--text-400); }
+.uv-reason__text  { font-size: 12px; line-height: 15px; color: var(--text-700); }
+
+.uv-rule {
+  position: absolute;
+  left: 24px;
+  top: 374px;
+  width: 344px;
+  height: 0.5px;
+  display: block;
+}
+
+/* The status chip sits at the right edge, as "Completed" does on the
+   28 SEP view. Mint on white here — the dark scrim version is only
+   needed where this chip lands on the filled blue card. */
+.chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  border-radius: var(--radius-chip);
+}
+.chip__label { font-size: 10px; line-height: 15px; white-space: nowrap; }
+
+.chip--helper {
+  right: 24px;
+  top: 175px;
+  padding: 0 10px;
+  background: #d9f7e5;
+}
+.chip--helper .chip__label { color: #0a5c2c; }
+
+/* ---- Body --------------------------------------------------- */
+.uv-body {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.uv-block { display: flex; flex-direction: column; gap: 10px; }
+
+.uv-block__label {
+  font-size: 12px;
+  line-height: 13px;
+  color: var(--text-500);
+}
+
+.screen .uv-when,
+.screen .uv-when__sub,
+.screen .uv-after,
+.screen .uv-sub,
+.screen .uv-qlist,
+.screen .uv-list,
+.screen .uv-notice,
+.screen .uv-helper__v { white-space: normal; }
+
+.uv-when      { font-size: 16px; font-weight: 500; line-height: 20px; color: var(--text-900); }
+.uv-when__sub { font-size: 12px; line-height: 16px; color: var(--text-700); margin-top: -4px; }
+
+.uv-sub { font-size: 10px; line-height: 14px; color: var(--text-400); }
+
+/* ---- Helper card -------------------------------------------- */
+.uv-helper {
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.uv-helper__top { display: flex; align-items: center; gap: 12px; }
+.uv-helper__avatar { width: 40px; height: 40px; display: block; flex: 0 0 auto; }
+.uv-helper__body { flex: 1; min-width: 0; }
+.uv-helper__name { font-size: 16px; font-weight: 500; line-height: 20px; color: var(--text-900); }
+.uv-helper__role { font-size: 12px; line-height: 15px; color: var(--text-700); margin-top: 2px; }
+
+.uv-helper__badge {
+  flex: 0 0 auto;
+  height: 20px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-chip);
+  background: #e6f9ee;
+  font-size: 10px;
+  color: #0a5c2c;
+  white-space: nowrap;
+}
+
+.uv-helper__rule { height: 0.5px; background: #bfd0ff; }
+
+.uv-helper__row { display: flex; align-items: baseline; gap: 12px; }
+.uv-helper__k { flex: 0 0 84px; font-size: 10px; line-height: 16px; color: var(--text-400); }
+.uv-helper__v { flex: 1; min-width: 0; font-size: 12px; line-height: 16px; color: var(--text-900); }
+
+.uv-notice {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--chip-helper-bg);
+  font-size: 11px;
+  line-height: 16px;
+  color: #0a7a37;
+}
+.uv-notice__tick {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 7px;
+  margin-top: 4px;
+  border-left: 2px solid #0b9241;
+  border-bottom: 2px solid #0b9241;
+  rotate: -45deg;
+}
+
+/* ---- Lists --------------------------------------------------- */
+/* Same treatment as the 28 SEP view's .vd-list / .vd-qa__q: an 18px
+   indent with the marker in the gutter. */
+.uv-qlist,
+.uv-list {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  color: var(--text-900);
+}
+.uv-qlist { list-style: decimal; font-weight: 500; }
+.uv-list  { list-style: disc; }
+.uv-qlist li,
+.uv-list li { margin-left: 18px; line-height: 19px; }
+.uv-qlist li + li,
+.uv-list li + li { margin-top: 6px; }
+
+.uv-after { font-size: 12px; line-height: 19px; color: var(--text-900); }
+
+/* ---- Care circle --------------------------------------------- */
+.uv-people {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+}
+.uv-people img { width: 32px; height: 32px; display: block; }
+.uv-people__names { font-size: 13px; line-height: 17px; color: var(--text-900); }
+.uv-people__sub { font-size: 10px; line-height: 13px; color: var(--text-400); margin-top: 1px; }
+
+/* ---- Focus --------------------------------------------------- */
+:focus-visible { outline: 2px solid var(--color-focus, #0462d3); outline-offset: 2px; border-radius: 6px; }
+:focus:not(:focus-visible) { outline: none; }
+
+/* ---- Delete confirmation sheet -------------------------------
+   The tab bar sits at z-index 4 in shell.css, so this clears it. */
+.uv-sheet { position: absolute; inset: 0; z-index: 10; }
+.uv-sheet[hidden] { display: none; }
+
+.uv-sheet__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 22, 40, 0.38);
+}
+
+.uv-sheet__panel {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--surface-card);
+  box-shadow: 0 8px 28px rgba(21, 25, 31, 0.18);
+}
+
+.uv-sheet__title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--text-900);
+}
+
+.screen .uv-sheet__body { white-space: normal; }
+.uv-sheet__body {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-700);
+}
+
+.uv-sheet__actions { display: flex; gap: 10px; margin-top: 18px; }
+
+.uv-sheet__btn {
+  flex: 1;
+  height: 46px;
+  border: 0;
+  border-radius: 26px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.uv-sheet__btn--keep { background: #eaefff; color: #1c1c1c; }
+/* White on #c0392b measures 5.4:1 */
+.uv-sheet__btn--del  { background: #c0392b; color: #ffffff; }
+.uv-sheet__btn:active { transform: scale(0.99); }

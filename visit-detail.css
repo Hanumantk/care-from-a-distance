@@ -1,0 +1,382 @@
+/* ============================================================
+   Visit detail — "iPhone 16 - 3" (4:262)
+   Reached by tapping the 28 SEP card on Visits. Canvas is 1804 tall
+   above the tab bar, so this screen scrolls a long way.
+   Shell, chrome and tab bar come from shell.css.
+   ============================================================ */
+
+@import url("shell.css");
+
+.screen__canvas { height: 1804px; }
+
+/* This is the first screen with real multi-line paragraphs. shell.css
+   sets `white-space: nowrap` on `.screen p` — correct for the
+   single-line text nodes on Home and Visits, wrong here, and at
+   specificity (0,1,1) it out-ranks a plain class. Two classes deep
+   (0,2,0) to win it back, rather than loosening the shared reset and
+   re-wrapping text on the two screens that rely on it. */
+.screen .vd-summary__text,
+.screen .vd-qa__a,
+.screen .vd-fu__text { white-space: normal; }
+
+/* 4:330 wraps the "Your questions" label and is w-full in Figma;
+   without this it shrinks and takes the label's width with it. */
+.vd-block--questions > div { width: 100%; }
+
+/* ---- Header ------------------------------------------------ */
+/* Back caret — DEVIATION from Figma (y 119 -> 113), made on request.
+   Figma parks this 24px box so its centre lands on 131. The title
+   beside it is Poppins 28/500 in a 31px box, which puts its baseline on
+   135 and its cap top on 115 — an optical centre of 125. The caret as
+   drawn therefore sat 6px below the word it belongs to. Centring on the
+   cap band rather than on the text node's box is what reads as level,
+   because the box carries leading the glyphs never fill. */
+.vd-back {
+  position: absolute;
+  left: 18px;
+  top: 113px;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+.vd-back img { width: 24px; height: 24px; display: block; }
+.vd-back:active { transform: scale(0.92); }
+
+.vd-title {
+  position: absolute;
+  left: 55px;
+  top: 110px;
+  width: 74px;
+  height: 31px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 31px;
+  color: #000000;
+}
+
+/* The blue pill behind this label is absent from the Figma frame —
+   only the white label and the white-stroked icon exist, so both
+   render invisible on the light ground. Kept as drawn. */
+.vd-add__icon {
+  position: absolute;
+  left: 240px;
+  top: 115px;
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.vd-add__label {
+  position: absolute;
+  left: 270px;
+  top: 117px;
+  width: 84px;
+  height: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  color: #ffffff;
+}
+
+.vd-ago {
+  position: absolute;
+  left: 24px;
+  top: 177px;
+  width: 92px;
+  height: 16px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-400);
+}
+
+.vd-date {
+  position: absolute;
+  left: 24px;
+  top: 195px;
+  width: 46px;
+  height: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 15px;
+  color: var(--text-600);
+}
+
+.vd-hospital {
+  position: absolute;
+  left: 24px;
+  top: 237px;
+  width: 198px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.vd-hospital__name   { height: 22px; font-size: 20px; font-weight: 500; line-height: 22px; color: var(--text-900); }
+.vd-hospital__doctor { height: 13px; font-size: 12px; line-height: 13px; color: var(--text-700); }
+
+.vd-reason {
+  position: absolute;
+  left: 24px;
+  top: 308px;
+  width: 191px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vd-reason__label { height: 11px; font-size: 10px; line-height: 11px; color: var(--text-400); }
+.vd-reason__text  { height: 15px; font-size: 12px; line-height: 15px; color: var(--text-700); }
+
+.vd-rule {
+  position: absolute;
+  left: 24px;
+  top: 374px;
+  width: 344px;
+  height: 0.5px;
+  display: block;
+}
+
+/* ---- Text blocks ------------------------------------------- */
+.vd-block {
+  position: absolute;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Figma gives every section label w-full. Inside an align-items:
+   flex-start column it would otherwise shrink to its text. */
+.vd-block__label {
+  width: 100%;
+  height: 13px;
+  font-size: 12px;
+  line-height: 13px;
+  color: var(--text-500);
+}
+
+.vd-block--summary   { top: 389px; width: 345px; gap: 12px; }
+.vd-block--found     { top: 477px; width: 345px; gap: 10px; }
+.vd-block--changed   { top: 592px; width: 344px; gap: 10px; }
+.vd-block--todo      { top: 707px; width: 344px; gap: 10px; }
+.vd-block--questions { top: 853px; width: 344px; gap: 12px; }
+
+/* The one SemiBold paragraph on the screen */
+.vd-summary__text {
+  width: 100%;
+  height: 43px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15.6px;
+  color: var(--text-700);
+  white-space: normal;
+}
+
+/* Bulleted findings. Figma indents each item 18px and bolds the
+   figures inline at SemiBold. */
+.vd-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: disc;
+  font-size: 12px;
+  color: var(--text-900);
+  white-space: normal;
+}
+.vd-list li { margin-left: 18px; line-height: normal; }
+.vd-list b  { font-weight: 600; }
+
+.vd-block--found   .vd-list { height: 72px; }
+.vd-block--changed .vd-list { height: 72px; }
+.vd-block--todo    .vd-list { height: 103px; }
+
+/* ---- Your questions ---------------------------------------- */
+.vd-qa {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-900);
+}
+.vd-qa__item { width: 100%; height: 54px; display: flex; flex-direction: column; gap: 10px; }
+
+.vd-qa__q {
+  width: 100%;
+  height: 13px;
+  margin: 0;
+  padding: 0;
+  list-style: decimal;
+  font-weight: 500;
+}
+.vd-qa__q li { margin-left: 18px; line-height: normal; }
+
+.vd-qa__a { width: 100%; height: 36px; line-height: normal; white-space: normal; }
+
+/* ---- Medicines bought -------------------------------------- */
+.vd-meds {
+  position: absolute;
+  left: 24px;
+  top: 1014px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* The exported pill art overflows its 48px box on every side. */
+.vd-meds__icon { position: relative; width: 48px; height: 48px; flex: 0 0 auto; }
+.vd-meds__icon img {
+  position: absolute;
+  left: -20px;
+  top: -16px;
+  width: 88px;
+  height: 88px;
+  display: block;
+}
+
+.vd-meds__body {
+  width: 267px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.vd-meds__list {
+  margin: 0;
+  padding: 0;
+  list-style: decimal;
+  color: var(--text-700);
+}
+.vd-meds__list li { margin-left: 18px; line-height: 15.6px; }
+
+/* ---- Follow up created ------------------------------------- */
+.vd-followup {
+  left: 24px;
+  top: 1097px;
+  width: 345px;
+  height: 182px;
+}
+
+.vd-fu__eyebrow { position: absolute; left: 20px; top: 16px;  width: 110px; height: 16px; font-size: 12px; line-height: 16px; color: var(--text-400); }
+.vd-fu__date    { position: absolute; left: 20px; top: 55px;  width: 43px;  height: 13px; font-size: 12px; font-weight: 600; line-height: 13px; color: #000000; }
+.vd-fu__place   { position: absolute; left: 85px; top: 46px;  width: 198px; height: 22px; font-size: 20px; font-weight: 500; line-height: 22px; color: var(--text-400); }
+.vd-fu__doctor  { position: absolute; left: 85px; top: 76px;  width: 141px; height: 13px; font-size: 12px; line-height: 13px; color: var(--text-400); }
+.vd-fu__divider { position: absolute; left: 20px; top: 105px; width: 305px; height: 0.5px; display: block; }
+.vd-fu__label   { position: absolute; left: 20px; top: 114px; width: 45px;  height: 11px; font-size: 10px; line-height: 11px; color: var(--text-600); }
+.vd-fu__text    { position: absolute; left: 20px; top: 131px; width: 305px; height: 31px; font-size: 12px; font-weight: 600; line-height: normal; color: var(--text-900); white-space: normal; }
+
+/* ---- Helper ------------------------------------------------- */
+.vd-helper {
+  position: absolute;
+  left: 24px;
+  top: 1299px;
+  width: 345px;
+  height: 245px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--surface-card);
+}
+
+.vd-helper__avatar   { position: absolute; left: 16px;  top: 18px; width: 47px; height: 47px; display: block; }
+.vd-helper__name     { position: absolute; left: 76px;  top: 19px; width: 94px;  height: 18px; font-size: 16px; font-weight: 500; line-height: 18px; color: var(--text-900); }
+.vd-helper__role     { position: absolute; left: 178px; top: 26px; width: 34px;  height: 11px; font-size: 10px; line-height: 11px; color: var(--text-400); }
+.vd-helper__tick     { position: absolute; left: 191px; top: 55px; width: 28px;  height: 1px; display: block; }
+.vd-helper__pickup   { position: absolute; left: 76px;  top: 45px; width: 110px; height: 13px; font-size: 12px; line-height: 13px; color: var(--text-700); }
+.vd-helper__home     { position: absolute; left: 225px; top: 45px; width: 101px; height: 13px; font-size: 12px; line-height: 13px; color: var(--text-700); }
+
+/* Figma has an empty 24x24 "Heart" frame here with no artwork —
+   kept as a reserved slot so the node still exists. */
+.vd-helper__heart-slot { position: absolute; left: 301px; top: 16px; width: 24px; height: 24px; }
+
+.vd-helper__rule     { position: absolute; left: 20px; width: 305px; height: 0.5px; display: block; }
+.vd-helper__rule--1  { top: 74px; }
+.vd-helper__rule--2  { top: 163px; }
+
+.vd-helper__stars    { position: absolute; left: 20px;  top: 86px;  width: 308px; height: 36px; display: block; }
+.vd-helper__rate     { position: absolute; left: 20px;  top: 134px; width: 96px;  height: 13px; font-size: 12px; line-height: 13px; color: #5a5a5a; }
+.vd-helper__heart    { position: absolute; left: 304px; top: 134px; width: 21px;  height: 18px; display: block; }
+.vd-helper__receipts { position: absolute; left: 138px; top: 195px; width: 68px;  height: 13px; font-size: 12px; line-height: 13px; color: #5a5a5a; }
+
+.vd-thumb {
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(0, 0, 0, 0.32);
+  border-radius: 8px;
+  background: var(--surface-card);
+}
+.vd-thumb--1 { position: absolute; left: 20px; top: 179px; }
+.vd-thumb--2 { position: absolute; left: 76px; top: 179px; }
+
+/* ---- Summary made from -------------------------------------- */
+.vd-source {
+  position: absolute;
+  left: 24px;
+  top: 1597px;
+  width: 345px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.vd-source__body    { width: 100%; display: flex; flex-direction: column; gap: 13px; }
+.vd-source__row     { display: flex; align-items: center; gap: 16px; }
+.vd-source__caption { width: 71px; height: 13px; font-size: 12px; line-height: 13px; color: var(--text-500); }
+.vd-source__bar {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #a2b8ff;
+  border-radius: 8px;
+  background: var(--blue);
+}
+
+.vd-play      { position: absolute; left: 35px; top: 1697px; width: 31px; height: 31px; display: block; }
+.vd-play__tri { position: absolute; left: 47px; top: 1706px; width: 9.5px; height: 14px; }
+.vd-play__tri img { position: absolute; left: -0.5px; top: -1px; width: 10.84px; height: 15.98px; display: block; }
+
+.vd-recording {
+  position: absolute;
+  left: 89px;
+  top: 1706px;
+  width: 121px;
+  height: 13px;
+  font-size: 12px;
+  line-height: 13px;
+  color: #d7d7d7;
+}
+
+/* ---- Chips --------------------------------------------------- */
+.chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  border-radius: var(--radius-chip);
+}
+.chip__label { font-size: 10px; line-height: 15px; white-space: nowrap; }
+
+/* Completed — padded on the left only, as in Figma */
+.chip--done {
+  left: 291px;
+  top: 175px;
+  width: 78px;
+  padding: 0 0 0 10px;
+  justify-content: flex-start;
+  background: #2ecc6d;
+}
+.chip--done .chip__label { width: 68px; color: #ffffff; }
+
+/* Helper assigned — this screen uses a paler mint than Home's */
+.chip--helper {
+  left: 224px;
+  top: 14px;
+  padding: 0 10px;
+  background: #d9f7e5;
+}
+.chip--helper .chip__label { width: 81px; color: var(--chip-helper-ink); }
+
+.chip--paid {
+  left: 277px;
+  top: 193px;
+  padding: 0 10px;
+  background: var(--dose-upcoming);
+}
+.chip--paid .chip__label { width: 28px; font-weight: 500; color: #666666; }

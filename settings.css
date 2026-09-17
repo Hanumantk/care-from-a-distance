@@ -1,0 +1,162 @@
+/* ============================================================
+   Settings — "iPhone 16 - 4" (4:422)
+   Shell, chrome and tab bar come from shell.css.
+
+   Frame is 884 with its nav at 816, so the canvas is 816 and the
+   screen scrolls just 32px — the shortest scroll in the prototype.
+
+   Every surface here uses a 0.2px border, drawn as an inset
+   box-shadow so Chrome's rounding doesn't shift the children.
+   ============================================================ */
+
+@import url("shell.css");
+
+.screen__canvas { height: 816px; }
+
+.set-title {
+  position: absolute;
+  left: 24px;
+  top: 110px;
+  width: 116px;
+  height: 31px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 31px;
+  color: #000000;
+}
+
+/* ---- Caretakers --------------------------------------------
+   This card carries a softer shadow than the rest of the app:
+   10px blur here against 12px everywhere else. */
+.carers {
+  position: absolute;
+  left: 24px;
+  top: 173px;
+  width: 345px;
+  height: 153px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue),
+              0px 4px 10px 0px rgba(77, 118, 255, 0.1);
+}
+
+/* Caretaker 1 is the signed-in user, so the row is filled blue. */
+.carer--active {
+  position: absolute;
+  left: 9px;
+  top: 9px;
+  width: 327px;
+  height: 65px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--blue);
+}
+
+.carer__avatar { position: absolute; left: 7px; top: 9px; width: 47px; height: 47px; display: block; }
+
+.carer__name {
+  position: absolute;
+  left: 67px;
+  top: 10px;
+  width: 45px;
+  height: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #ffffff;
+}
+
+.carer__role {
+  position: absolute;
+  left: 67px;
+  top: 36px;
+  width: 120px;
+  height: 13px;
+  font-size: 12px;
+  line-height: 13px;
+  color: #c3c3c3;
+}
+
+/* Figma has an empty 24x24 "Heart" frame here with no artwork —
+   same as on the visit-detail helper card. Kept as a slot. */
+.carer__heart-slot { position: absolute; left: 292px; top: 7px; width: 24px; height: 24px; }
+
+.carers__divider { position: absolute; left: 20px; top: 86px; width: 305px; height: 0.5px; display: block; }
+
+/* Caretaker 2 sits directly on the card, not in a filled row. */
+.carer__avatar--2 { position: absolute; left: 16px; top: 92px; }
+
+.carer__name--2 {
+  position: absolute;
+  left: 76px;
+  top: 96px;
+  width: 75px;
+  height: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--text-900);
+}
+
+.carer__role--2 {
+  position: absolute;
+  left: 76px;
+  top: 122px;
+  width: 129px;
+  height: 13px;
+  font-size: 12px;
+  line-height: 13px;
+  color: var(--text-700);
+}
+
+/* 18x18 node; the exported stroke overhangs, so it renders 20x20
+   offset by -1 — the same treatment as the Add New Visit icon. */
+.carers__add { position: absolute; left: 306px; top: 110px; width: 20px; height: 20px; display: block; }
+
+/* ---- Setting rows ------------------------------------------- */
+.set-row {
+  position: absolute;
+  left: 24px;
+  width: 345px;
+  height: 48px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+  text-decoration: none;
+}
+
+.set-row--1 { top: 384px; }
+.set-row--2 { top: 448px; }
+.set-row--3 { top: 512px; }
+.set-row--4 { top: 576px; }
+.set-row--5 { top: 640px; }
+.set-row--6 { top: 704px; }
+
+.set-row__icon { position: absolute; left: 22px; top: 12px; width: 24px; height: 24px; display: block; }
+
+.set-row__label {
+  position: absolute;
+  left: 63px;
+  top: 12px;
+  width: 152px;
+  height: 23px;
+  font-size: 16px;
+  line-height: 23px;
+  color: #484848;
+  white-space: nowrap;
+}
+/* The last three labels are declared 163 wide in Figma, not 152. */
+.set-row__label--wide { width: 163px; }
+
+/* Exported caret points left; Figma rotates it 180deg. */
+.set-row__chevron {
+  position: absolute;
+  left: 320.4px;
+  top: 15.9px;
+  width: 8.8px;
+  height: 16.6px;
+  display: block;
+  transform: rotate(180deg);
+}

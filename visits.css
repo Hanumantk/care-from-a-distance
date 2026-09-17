@@ -1,0 +1,290 @@
+/* ============================================================
+   Visits screen — "iPhone 16 - 2" (4:135)
+   Device shell, iOS chrome, scroller and tab bar live in shell.css,
+   shared with the home screen.
+
+   Three cards of identical geometry (345 x 165) at 161 / 346 / 531.
+   The first is filled blue and has NO border, so its children sit at
+   their raw Figma coordinates. The two past cards carry the 0.5px
+   hairline as an inset box-shadow — a real 0.5px border gets rounded
+   up for layout and shifts every child half a pixel.
+   ============================================================ */
+
+@import url("shell.css");
+
+/* The canvas is the full frame height: content ends at 696, the tab
+   bar starts at 784, so this screen has nothing to scroll. */
+.screen__canvas { height: 784px; }
+
+/* ---- Title + action ---------------------------------------- */
+.page-title {
+  position: absolute;
+  left: 24px;
+  top: 110px;
+  width: 74px;
+  height: 31px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 31px;
+  color: #000000;
+}
+
+.btn-add-visit {
+  position: absolute;
+  left: 233px;
+  top: 109px;
+  width: 136px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--blue);
+  font-family: inherit;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.btn-add-visit:hover  { filter: brightness(1.06); }
+.btn-add-visit:active { transform: scale(0.98); }
+
+.btn-add-visit__icon {
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.btn-add-visit__label {
+  position: absolute;
+  left: 37px;
+  top: 8px;
+  width: 84px;
+  height: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  color: #ffffff;
+  text-align: left;
+}
+
+/* ---- Visit cards -------------------------------------------
+   Figma stacks these at 161 / 346 / 531 — a 165px card with a 20px
+   gap. Expressed as a flex column at top 161 it reproduces those
+   coordinates exactly AND lets a newly booked visit slot in. */
+#visitList {
+  position: absolute;
+  left: 24px;
+  top: 161px;
+  width: 345px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.visit { position: relative; left: auto; top: auto; width: 345px; height: 165px; flex: 0 0 auto; }
+
+.visit--upcoming { background: var(--blue); }
+.visit--past     { box-shadow: inset 0 0 0 0.5px var(--hairline), var(--card-shadow); }
+
+
+/* Leading model — every text node in this card reports `leading: normal`
+   in Figma, and the designer then dragged the BOX shorter than the line
+   it holds: a 12px line whose natural box is 18px is drawn 13px tall.
+   Figma top-aligns text in a fixed box, so the first baseline sits one
+   ascent below `top` and the glyphs simply overhang the bottom edge.
+
+   Setting line-height to the box height instead — which is what these
+   rules used to do — makes CSS distribute NEGATIVE half-leading and
+   vertically centre the glyphs, lifting each line by a different amount
+   depending on its font size. That is precisely what pulled "24 OCT"
+   out of line with "Hedgewar hospital": the 20px line rose 3px, the
+   12px line only 1.5px, so the date ended up hanging 1.5px low. With
+   `normal` both baselines land on 68, exactly as drawn.
+
+   The `height` declarations below are kept: they are the Figma box, and
+   they still describe the node even though the text overhangs them. */
+.visit__eyebrow {
+  position: absolute;
+  left: 20px;
+  top: 16px;
+  width: 92px;
+  height: 16px;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--text-400);
+}
+
+.visit__date {
+  position: absolute;
+  left: 20px;
+  top: 55px;
+  width: 43px;
+  height: 13px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--text-600);
+}
+
+.visit__place {
+  position: absolute;
+  left: 85px;
+  top: 46px;
+  width: 198px;
+  height: 22px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--text-900);
+}
+
+.visit__doctor {
+  position: absolute;
+  left: 85px;
+  top: 76px;
+  width: 141px;
+  height: 13px;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--text-700);
+}
+
+.visit__divider {
+  position: absolute;
+  left: 20px;
+  top: 105px;
+  width: 305px;
+  height: 0.5px;
+  display: block;
+}
+
+.visit__reason-label {
+  position: absolute;
+  left: 20px;
+  top: 114px;
+  width: 45px;
+  height: 11px;
+  font-size: 10px;
+  line-height: normal;
+  color: var(--text-400);
+}
+
+.visit__reason {
+  position: absolute;
+  left: 20px;
+  top: 131px;
+  width: 191px;
+  height: 15px;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--text-700);
+}
+
+/* On the blue card every text colour inverts to its own ramp —
+   white for the two headline lines, #ededed for the supporting
+   ones, #c8c8c8 for the smallest label. */
+.visit--upcoming .visit__eyebrow      { color: #ffffff; }
+.visit--upcoming .visit__date         { color: #ededed; }
+.visit--upcoming .visit__place        { color: #ffffff; }
+.visit--upcoming .visit__doctor       { color: #ededed; }
+.visit--upcoming .visit__reason-label { color: #c8c8c8; }
+.visit--upcoming .visit__reason       { color: #ededed; }
+
+/* ---- Chips -------------------------------------------------- */
+.chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  border-radius: var(--radius-chip);
+}
+
+.chip__label {
+  font-size: 10px;
+  line-height: 15px;
+  white-space: nowrap;
+}
+
+/* Helper assigned — DEVIATION from Figma, made on request.
+   As drawn this is a 42%-black scrim carrying a neon #0f6 label. It
+   measures 6.5:1, so it is not a contrast failure as such, but it is a
+   neon green sitting in a near-black hole punched through the blue
+   card, and it is the only place that green appears anywhere in the
+   app. Replaced with the app's own positive pair, made opaque so it
+   survives the blue ground instead of muddying into it:
+     #0a5c2c label on #e6f9ee fill   7.4:1  (AA needs 4.5 at 10px)
+     #e6f9ee fill on the #4d76ff card 3.6:1 (1.4.11 needs 3 for the
+                                             pill's own edge)
+   Geometry is untouched — 101 x 20 at 224,14, 10px of side padding. */
+.chip--helper {
+  left: 224px;
+  top: 14px;
+  padding: 0 10px;
+  background: #e6f9ee;
+}
+.chip--helper .chip__label { width: 81px; color: #0a5c2c; }
+
+/* Completed — 78 wide, and Figma pads it on the LEFT only. */
+.chip--done {
+  left: 247px;
+  top: 14px;
+  width: 78px;
+  padding: 0 0 0 10px;
+  justify-content: flex-start;
+  background: #2ecc6d;
+}
+.chip--done .chip__label { width: 68px; color: #ffffff; }
+
+/* The 28 SEP card opens the visit detail. It is an <a>, so it needs
+   the text colour reset that a link would otherwise inherit. */
+a.visit { display: block; text-decoration: none; color: inherit; }
+a.visit:active { transform: scale(0.995); }
+
+/* The Add New Visit pill is a link now, not a button. */
+a.btn-add-visit { display: block; text-decoration: none; }
+
+/* ---- Confirmation toast -------------------------------------- */
+.toast {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 84px;
+  z-index: var(--z-toast);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--chip-helper-bg);
+  font-size: 12px;
+  line-height: 16px;
+  color: #0a7a37;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.toast.is-out { opacity: 0; transform: translateY(6px); }
+/* .toast sets display:flex, and an author rule outranks the UA's
+   [hidden]{display:none} — so setting .hidden never actually removed
+   this. It only looked gone because .is-out takes it to opacity 0, while
+   the element kept its strip above the tab bar and kept catching taps. */
+.toast[hidden] { display: none; }
+.toast__tick {
+  flex: 0 0 auto;
+  width: 12px; height: 7px;
+  border-left: 2px solid #0b9241;
+  border-bottom: 2px solid #0b9241;
+  rotate: -45deg;
+}
+
+/* A deletion is not a success — same shape as the added-visit toast but
+   in the app's neutral grey rather than its positive green, so the two
+   are not mistaken for each other at a glance. */
+.toast--removed { background: #ececf2; color: #3a3a3a; }
+.toast--removed .toast__tick {
+  width: 10px; height: 10px;
+  border: 0;
+  rotate: none;
+  background: #6e6e6e;
+  clip-path: polygon(14% 0, 50% 36%, 86% 0, 100% 14%, 64% 50%, 100% 86%, 86% 100%, 50% 64%, 14% 100%, 0 86%, 36% 50%, 0 14%);
+}

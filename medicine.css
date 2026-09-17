@@ -1,0 +1,285 @@
+/* ============================================================
+   Medicine — "iPhone 16 - 5" (4:676)
+   Shell, chrome and tab bar come from shell.css.
+
+   The frame carries NO tab bar of its own, so the canvas is the
+   frame height minus the 68px bar: 1709 - 68 = 1641.
+
+   Every bordered surface here draws its edge with an inset
+   box-shadow rather than a real border. Figma's 0.5px and 0.2px
+   borders get rounded up for layout in Chrome, which would shift
+   each card's children off their stated coordinates.
+   ============================================================ */
+
+@import url("shell.css");
+
+.screen__canvas { height: 1641px; }
+
+/* Multi-line paragraphs — shell.css sets nowrap on `.screen p`
+   at (0,1,1), so two classes deep to win it back.
+
+   EVERY tablet field value wraps, not a hand-picked few: they all sit
+   in fixed-width columns (153/144/164) and Figma lets any of them run
+   to a second line. Opting them in individually is how "How to take"
+   ended up on one 164px line inside a 153px column. */
+.screen .refill__text,
+.screen .tablet-field__value { white-space: normal; }
+
+/* ---- Titles ------------------------------------------------- */
+.med-title {
+  position: absolute;
+  left: 24px;
+  top: 110px;
+  width: 128px;
+  height: 31px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 31px;
+  color: #000000;
+}
+
+.med-subtitle {
+  position: absolute;
+  left: 24px;
+  top: 684px;
+  width: 136px;
+  height: 31px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 31px;
+  color: #000000;
+  white-space: nowrap;
+}
+
+/* ---- Meal cards --------------------------------------------- */
+.meal {
+  position: absolute;
+  width: 345px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--blue);
+  box-shadow: inset 0 0 0 0.5px rgba(77, 118, 255, 0.2), var(--card-shadow);
+}
+
+/* Lunch sits one pixel left of the other two — as drawn. */
+.meal--breakfast { left: 24px; top: 161px; height: 164px; }
+.meal--lunch     { left: 23px; top: 345px; height: 124px; }
+.meal--dinner    { left: 24px; top: 489px; height: 163px; }
+
+.meal__chip {
+  position: absolute;
+  height: 28px;
+  overflow: hidden;
+  border-radius: 19px;
+  background: #eaefff;
+}
+.meal__chip--breakfast { left: 20px; top: 20px; width: 103px; }
+.meal__chip--lunch     { left: 22px; top: 21px; width: 81px; }
+.meal__chip--dinner    { left: 20px; top: 21px; width: 86px; }
+
+.meal__chip-icon { position: absolute; display: block; }
+.meal__chip--breakfast .meal__chip-icon { left: 7px; top: 4px; width: 20px; height: 20px; }
+.meal__chip--lunch     .meal__chip-icon { left: 8px; top: 4px; width: 20px; height: 20px; }
+.meal__chip--dinner    .meal__chip-icon { left: 6px; top: 1px; width: 24px; height: 24px; }
+
+.meal__chip-label {
+  position: absolute;
+  height: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #1c1c1c;
+  white-space: nowrap;
+}
+.meal__chip--breakfast .meal__chip-label { left: 33px; top: 5px; width: 59px; }
+.meal__chip--lunch     .meal__chip-label { left: 34px; top: 5px; width: 37px; }
+.meal__chip--dinner    .meal__chip-label { left: 34px; top: 6px; width: 41px; }
+
+/* "Before" / "After" column headings sit on the blue at a very
+   light grey — deliberately quieter than the medicine names. */
+.meal__col-label {
+  height: 15px;
+  font-size: 12px;
+  line-height: 15px;
+  color: #cfcfcf;
+}
+
+.meal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #ffffff;
+}
+.meal__list p { height: 15px; width: 100%; line-height: 15px; }
+.meal__list .is-bold { font-weight: 700; }
+
+.meal__none,
+.meal__none-inline {
+  height: 15px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #ffffff;
+}
+
+/* Breakfast: single label + list on the left, grouped block right */
+.meal--breakfast .meal__before-label { position: absolute; left: 20px; top: 68px; width: 40px; }
+.meal--breakfast .meal__before-list  { position: absolute; left: 20px; top: 91px; width: 118px; }
+
+/* Lunch: four independently placed pieces */
+.meal--lunch .meal__before-label { position: absolute; left: 20px;  top: 69px; width: 40px; }
+.meal--lunch .meal__none         { position: absolute; left: 20px;  top: 92px; width: 27px; }
+.meal--lunch .meal__after-label  { position: absolute; left: 173px; top: 69px; width: 36px; }
+.meal--lunch .meal__after-list   { position: absolute; left: 173px; top: 92px; width: 118px; }
+
+/* Dinner: both columns are grouped blocks */
+.meal--dinner .meal__before {
+  position: absolute;
+  left: 20px;
+  top: 69px;
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meal__after {
+  position: absolute;
+  left: 173px;
+  top: 68px;
+  width: 118px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.meal--dinner .meal__after { top: 69px; }
+.meal__after .meal__col-label { width: 100%; }
+
+/* ---- All tablets -------------------------------------------- */
+.tablets {
+  position: absolute;
+  left: 24px;
+  top: 735px;
+  width: 345px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tablet-detail {
+  position: relative;
+  width: 100%;
+  height: 184px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+}
+
+.tablet-detail__name {
+  position: absolute;
+  left: 21px;
+  top: 14px;
+  width: 158px;
+  height: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #3b3b3b;
+}
+
+.tablet-field {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 10px;
+}
+.tablet-field__label { width: 100%; height: 12px; line-height: 12px; color: var(--text-400); }
+.tablet-field__value { width: 100%; height: 12px; line-height: 12px; color: #2e2e2e; }
+.tablet-field__value--wrap { height: auto; line-height: normal; }
+
+.tablet-field--how    { left: 21px;  top: 48px;  width: 153px; height: 40px; }
+.tablet-field--stock  { left: 185px; top: 48px;  width: 153px; height: 40px; }
+.tablet-field--by     { left: 21px;  top: 100px; width: 153px; }
+.tablet-field--note   { left: 185px; top: 100px; width: 144px; height: 40px; }
+.tablet-field--change { left: 21px;  top: 138px; width: 164px; }
+
+.tablet-rows {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tablet-row {
+  position: relative;
+  width: 345px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+}
+
+.tablet-row__name {
+  position: absolute;
+  left: 21px;
+  top: 11px;
+  width: 152px;
+  height: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #3b3b3b;
+}
+
+/* The exported caret points left; Figma rotates it 180deg. */
+.tablet-row__chevron {
+  position: absolute;
+  left: 320.4px;
+  top: 13.3px;
+  width: 8.8px;
+  height: 13.9px;
+  display: block;
+  transform: rotate(180deg);
+}
+
+/* ---- Upcoming refill ---------------------------------------- */
+.refill {
+  left: 24px;
+  top: 1303px;
+  width: 345px;
+  height: 257px;
+  box-shadow: inset 0 0 0 0.5px var(--hairline), var(--card-shadow);
+}
+
+.refill__eyebrow { position: absolute; left: 20px; top: 16px;  width: 92px;  height: 16px; font-size: 12px; line-height: 16px; color: var(--text-400); }
+.refill__date    { position: absolute; left: 20px; top: 55px;  width: 43px;  height: 13px; font-size: 12px; font-weight: 500; line-height: 13px; color: var(--text-600); }
+.refill__name    { position: absolute; left: 85px; top: 46px;  width: 198px; height: 22px; font-size: 20px; font-weight: 500; line-height: 22px; color: var(--text-900); }
+.refill__sub     { position: absolute; left: 85px; top: 76px;  width: 141px; height: 13px; font-size: 12px; line-height: 13px; color: var(--text-700); }
+.refill__divider { position: absolute; left: 20px; top: 105px; width: 305px; height: 0.5px; display: block; }
+.refill__label   { position: absolute; left: 20px; top: 114px; width: 58px;  height: 11px; font-size: 10px; line-height: 11px; color: var(--text-400); }
+.refill__text    { position: absolute; left: 20px; top: 131px; width: 305px; height: 104px; font-size: 12px; line-height: normal; color: var(--text-700); }
+
+/* ---- Chips --------------------------------------------------- */
+.chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  border-radius: var(--radius-chip);
+}
+.chip__label { font-size: 10px; line-height: 15px; white-space: nowrap; }
+
+.chip--helper {
+  left: 224px;
+  top: 14px;
+  padding: 0 10px;
+  background: var(--chip-helper-bg);
+}
+.chip--helper .chip__label { width: 81px; color: var(--chip-helper-ink); }

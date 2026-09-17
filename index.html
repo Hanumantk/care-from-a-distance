@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Parent Health App — Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <!-- ── iPhone 16 device shell ───────────────────────────────
+       Everything from here to the closing .device is chrome, not
+       design: bezel, Dynamic Island, status bar, home indicator.
+       The Figma frame itself is the .screen inside. -->
+  <div class="device">
+    <div class="device__btn device__btn--action"></div>
+    <div class="device__btn device__btn--volup"></div>
+    <div class="device__btn device__btn--voldown"></div>
+    <div class="device__btn device__btn--power"></div>
+
+    <div class="device__screen">
+
+  <!-- iPhone 16 - 1 · 393 x 852 viewport.
+       The Figma canvas runs to 996 to hold all the content, so
+       everything above the tab bar lives in a scroller and keeps its
+       exact frame coordinates. The tab bar is pinned to the viewport. -->
+  <div class="screen" data-node-id="1:2">
+
+   <div class="screen__scroll">
+    <div class="screen__canvas">
+
+    <!-- ── Greeting ─────────────────────────────────────────── -->
+    <p class="greeting-hey" data-node-id="1:3">Hey</p>
+    <h1 class="greeting-name" data-node-id="1:4">Hanu</h1>
+
+    <!-- ── Add New Visit ────────────────────────────────────── -->
+    <a class="btn-add-visit" href="add-visit.html" data-node-id="1:5">
+      <img class="btn-add-visit__icon" src="assets/icon-add.svg" alt="" data-node-id="2:81" />
+      <span class="btn-add-visit__label" data-node-id="1:11">Add New Visit</span>
+    </a>
+
+    <!-- ── Upcoming visit ───────────────────────────────────── -->
+    <section class="card visit-card" data-node-id="1:9">
+      <p class="visit-card__eyebrow" data-node-id="1:10">Upcoming visit</p>
+
+      <div class="chip chip--helper" data-node-id="4:134">
+        <span class="chip__label" data-node-id="4:133">Helper assigned</span>
+      </div>
+
+      <p class="visit-card__date" data-node-id="1:12">24 OCT</p>
+      <p class="visit-card__place" data-node-id="1:13">Hedgewar hospital</p>
+      <p class="visit-card__doctor" data-node-id="1:14">Dr Ranjana Deshmukh</p>
+
+      <img class="visit-card__divider" src="assets/divider.svg" alt="" data-node-id="1:17" />
+
+      <p class="visit-card__reason-label" data-node-id="1:15">Reason</p>
+      <p class="visit-card__reason" data-node-id="1:16">Monthly follow up appointment</p>
+    </section>
+
+    <!-- ── Status ───────────────────────────────────────────── -->
+    <p class="status__headline" data-node-id="4:656">Nothing needs you today</p>
+    <img class="status__divider" src="assets/divider-status.svg" alt="" data-node-id="4:658" />
+    <p class="status__sub" data-node-id="4:657">Maa&rsquo;s health is on track &middot; updated 8:10 pm</p>
+
+    <!-- ── Vitals ───────────────────────────────────────────── -->
+    <section class="card vital vital--bp" data-node-id="1:19">
+      <p class="vital__title" data-node-id="2:2">BP</p>
+      <p class="vital__reading" data-node-id="2:6">
+        <span class="vital__value" data-node-id="2:3">138/86</span><span class="vital__unit" data-node-id="2:4">mmHg</span>
+      </p>
+      <p class="vital__meta" data-node-id="2:7">logged 3 days ago</p>
+      <img class="vital__edit vital__edit--bp" src="assets/edit-bp.svg" alt="" data-node-id="4:651" />
+      <p class="vital__target-label" data-node-id="4:662">Target</p>
+      <p class="vital__target-value" data-node-id="4:660">130/80</p>
+      <img class="vital__trend" src="assets/arrow-down.svg" alt="" data-node-id="4:663" />
+    </section>
+
+    <section class="card vital vital--movement is-filled" data-node-id="1:26">
+      <p class="vital__title" data-node-id="2:8">Movement</p>
+      <p class="vital__reading" data-node-id="2:10">
+        <span class="vital__value" data-node-id="2:11">2340</span><span class="vital__unit" data-node-id="2:12">Steps</span>
+      </p>
+      <p class="vital__meta" data-node-id="2:9">Today</p>
+    </section>
+
+    <section class="card vital vital--sugar is-filled" data-node-id="1:27">
+      <p class="vital__title" data-node-id="2:13">Sugar</p>
+      <p class="vital__reading" data-node-id="2:15">
+        <span class="vital__value" data-node-id="2:16">118</span><span class="vital__unit" data-node-id="2:17">mg/dL</span>
+      </p>
+      <p class="vital__meta" data-node-id="2:14">Logged today at 9:00 AM</p>
+      <img class="vital__edit vital__edit--sugar" src="assets/edit-sugar.svg" alt="" data-node-id="4:654" />
+      <p class="vital__target-label" data-node-id="4:668">Target</p>
+      <p class="vital__target-value" data-node-id="4:669">80-130</p>
+    </section>
+
+    <section class="card vital vital--creatinine" data-node-id="1:28">
+      <p class="vital__title" data-node-id="2:23">Creatinine</p>
+      <p class="vital__reading" data-node-id="4:674">
+        <span class="vital__value" data-node-id="2:26">1.0</span><span class="vital__unit" data-node-id="2:27">mg/dL</span>
+      </p>
+      <p class="vital__meta" data-node-id="2:24">Logged 3 days ago</p>
+      <img class="vital__edit vital__edit--creatinine" src="assets/edit-creatine.svg" alt="" data-node-id="4:655" />
+      <div class="vital__target" data-node-id="4:675">
+        <span class="vital__target-label" data-node-id="4:672">Target</span>
+        <span class="vital__target-value" data-node-id="4:673">0.7-1.3</span>
+      </div>
+    </section>
+
+    <!-- ── Medicine log ─────────────────────────────────────── -->
+    <section class="card medicine" data-node-id="2:29">
+      <p class="medicine__title" data-node-id="2:30">Medicine log</p>
+
+      <div class="legend legend--taken" data-node-id="4:126">
+        <span class="legend__swatch" data-node-id="4:124"></span>
+        <span class="legend__label" data-node-id="4:125">Taken</span>
+      </div>
+      <div class="legend legend--missed" data-node-id="4:127">
+        <span class="legend__swatch" data-node-id="4:128"></span>
+        <span class="legend__label" data-node-id="4:129">Missed</span>
+      </div>
+      <div class="legend legend--notyet" data-node-id="4:130">
+        <span class="legend__swatch" data-node-id="4:131"></span>
+        <span class="legend__label" data-node-id="4:132">Not yet</span>
+      </div>
+
+      <div class="medicine__pills" data-node-id="2:119">
+        <img class="medicine__pill" src="assets/pill-mon.svg"   alt="" data-node-id="2:93"  />
+        <img class="medicine__pill" src="assets/pill-tue.svg"   alt="" data-node-id="2:95"  />
+        <img class="medicine__pill" src="assets/pill-wed.svg"   alt="" data-node-id="2:99"  />
+        <img class="medicine__pill" src="assets/pill-thu.svg"   alt="" data-node-id="2:103" />
+        <img class="medicine__pill" src="assets/pill-empty.svg" alt="" data-node-id="2:107" />
+        <img class="medicine__pill" src="assets/pill-empty.svg" alt="" data-node-id="2:111" />
+        <img class="medicine__pill" src="assets/pill-empty.svg" alt="" data-node-id="2:115" />
+      </div>
+
+      <p class="medicine__meal medicine__meal--d" data-node-id="2:123">D</p>
+      <p class="medicine__meal medicine__meal--l" data-node-id="2:122">L</p>
+      <p class="medicine__meal medicine__meal--b" data-node-id="2:121">B</p>
+
+      <div class="medicine__days" data-node-id="2:120">
+        <span class="medicine__day medicine__day--mon" data-node-id="2:67">Mon</span>
+        <span class="medicine__day medicine__day--tue" data-node-id="2:68">Tue</span>
+        <span class="medicine__day medicine__day--wed" data-node-id="2:69">Wed</span>
+        <span class="medicine__day medicine__day--thu" data-node-id="2:70">Thu</span>
+        <span class="medicine__day medicine__day--fri is-upcoming" data-node-id="2:71">Fri</span>
+        <span class="medicine__day medicine__day--sat is-upcoming" data-node-id="2:72">Sat</span>
+        <span class="medicine__day medicine__day--sun is-upcoming" data-node-id="2:73">Sun</span>
+      </div>
+    </section>
+
+    </div><!-- /.screen__canvas -->
+   </div><!-- /.screen__scroll -->
+
+    <!-- ── Tab bar ──────────────────────────────────────────────
+         Component "Navigation bar Home selected" (4:759) — four tabs,
+         Phosphor icons. Replaces the three-tab Material bar that is
+         still sitting in frame 1:2. -->
+    <nav class="tabbar" data-node-id="4:759">
+      <a class="tabbar__item tabbar__item--home is-active" href="#" data-node-id="4:751">
+        <img class="tabbar__icon" src="assets/nav2-home.svg" alt="" />
+        <span class="tabbar__label" data-node-id="4:760">Home</span>
+      </a>
+      <a class="tabbar__item tabbar__item--visits" href="visits.html" data-node-id="4:766">
+        <img class="tabbar__icon" src="assets/nav2-visits.svg" alt="" />
+        <span class="tabbar__label" data-node-id="4:761">Visits</span>
+      </a>
+      <a class="tabbar__item tabbar__item--medicine" href="medicine.html" data-node-id="4:800">
+        <img class="tabbar__icon" src="assets/nav2-medicine.svg" alt="" />
+        <span class="tabbar__label" data-node-id="4:763">Medicine</span>
+      </a>
+      <a class="tabbar__item tabbar__item--settings" href="settings.html" data-node-id="4:768">
+        <img class="tabbar__icon" src="assets/nav2-settings.svg" alt="" />
+        <span class="tabbar__label" data-node-id="4:762">Settings</span>
+      </a>
+    </nav>
+
+  </div><!-- /.screen -->
+
+      <!-- ── iOS chrome, drawn over the frame ───────────────── -->
+      <div class="statusbar" aria-hidden="true">
+        <span class="statusbar__time">8:12</span>
+        <span class="statusbar__icons">
+          <svg class="statusbar__icon" viewBox="0 0 17 12" fill="currentColor">
+            <rect x="0"    y="8"   width="3" height="4"  rx="1" />
+            <rect x="4.7"  y="5.5" width="3" height="6.5" rx="1" />
+            <rect x="9.4"  y="3"   width="3" height="9"  rx="1" />
+            <rect x="14.1" y="0"   width="3" height="12" rx="1" />
+          </svg>
+          <svg class="statusbar__icon" viewBox="0 0 16 12">
+            <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M1.2 4.3a10 10 0 0 1 13.6 0" />
+              <path d="M3.9 7.1a6.4 6.4 0 0 1 8.2 0" />
+            </g>
+            <circle cx="8" cy="10.1" r="1.35" fill="currentColor" />
+          </svg>
+          <svg class="statusbar__icon statusbar__icon--battery" viewBox="0 0 27 13">
+            <rect x="0.6" y="0.6" width="22.8" height="11.8" rx="3.6"
+                  fill="none" stroke="currentColor" stroke-opacity="0.38" stroke-width="1.1" />
+            <rect x="2.2" y="2.2" width="16.5" height="8.6" rx="2.1" fill="currentColor" />
+            <path d="M25.2 4.6v3.8a2.4 2.4 0 0 0 0-3.8z" fill="currentColor" fill-opacity="0.4" />
+          </svg>
+        </span>
+      </div>
+
+      <div class="island" aria-hidden="true"></div>
+      <div class="homebar" aria-hidden="true"></div>
+
+    </div><!-- /.device__screen -->
+  </div><!-- /.device -->
+<script src="app.js"></script>
+<script src="home.js"></script>
+</body>
+</html>

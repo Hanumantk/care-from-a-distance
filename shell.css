@@ -1,0 +1,313 @@
+/* ============================================================
+   Parent health app — Home
+   Rebuilt 1:1 from Figma "Parent health app" > iPhone 16 - 1
+   Frame: 393 x 852. All coordinates are Figma-exact.
+
+   Absolutely-positioned children resolve against their parent PADDING
+   box, so a node at Figma x is written as (x - border-width): the 2px
+   vital cards inset their contents by 2. The two hairline cards draw
+   their 0.5px edge with an inset box-shadow instead of a border --
+   Chrome rounds a 0.5px border up for layout, which shifted every
+   child half a pixel. A shadow is outside layout, so the coordinates
+   stay exactly as Figma reports them.
+   ============================================================ */
+
+:root {
+  /* Brand */
+  --blue:            #4d76ff;
+  --blue-border:     #c3d1ff;
+  --hairline:        rgba(77, 118, 255, 0.5);
+  --card-shadow:     0px 4px 12px 0px rgba(77, 118, 255, 0.1);
+
+  /* Surfaces */
+  --surface-card:    #ffffff;
+  --surface-vital:   #feffff;
+  --gradient-end:    #f2f5ff;
+
+  /* Text */
+  --text-900:        #1a1a1a;
+  --text-700:        #3a3a3a;
+  --text-600:        #4e4e4e;
+  --text-500:        #6e6e6e;
+  --text-400:        #7e7e7e;
+  --text-300:        #9e9e9e;
+  --text-200:        #cecece;
+
+  /* On the filled blue cards */
+  --on-blue-title:   #ebebeb;
+  --on-blue-value:   #ffffff;
+  --on-blue-unit:    #dbdbdb;
+
+  /* Helper chip */
+  --chip-helper-bg:  rgba(47, 210, 112, 0.18);
+  --chip-helper-ink: #0b9241;
+
+  /* Medicine log */
+  --dose-taken:      #2fd270;
+  --dose-missed:     #ed4546;
+  --dose-upcoming:   #dfdfdf;
+
+  --radius-card:     12px;
+  --radius-pill:     30px;
+  --radius-chip:     15px;
+
+  /* Device shell */
+  --bezel:           11px;
+  --screen-radius:   55px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef1f8;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   iPhone 16 device shell
+   Display is 393 x 852 pt with a 55pt corner radius. The bezel,
+   Dynamic Island (125 x 36), status bar and home indicator (139 x 5)
+   are chrome drawn around the Figma frame — none of it is design.
+   ============================================================ */
+.device {
+  position: relative;
+  padding: var(--bezel);
+  border-radius: calc(var(--screen-radius) + var(--bezel));
+  background:
+    linear-gradient(145deg, #5b5f66 0%, #2f3237 18%, #23262a 50%, #3a3e44 82%, #6a6f77 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.10) inset,
+    0 30px 70px rgba(20, 28, 60, 0.32),
+    0 6px 18px rgba(20, 28, 60, 0.20);
+}
+
+.device__screen {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  overflow: hidden;
+  border-radius: var(--screen-radius);
+  background: #000000;
+}
+
+/* Titanium side buttons. They sit just outside the bezel, so they
+   read as hardware rather than as part of the UI. */
+.device__btn {
+  position: absolute;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #4a4e55, #24272b);
+}
+.device__btn--action  { left: -2px;  top: 132px; height: 30px; }
+.device__btn--volup   { left: -2px;  top: 196px; height: 58px; }
+.device__btn--voldown { left: -2px;  top: 268px; height: 58px; }
+.device__btn--power   { right: -2px; top: 224px; height: 92px; }
+
+/* ---- Frame ------------------------------------------------
+   The viewport is 393 x 852 — the iPhone 16 default. Figma's canvas
+   runs to 996 because the content outgrew the screen, so the overflow
+   scrolls here instead of making the phone taller. */
+.screen {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  overflow: hidden;
+  background: var(--gradient-end);
+}
+
+/* ---- iOS chrome -------------------------------------------- */
+.statusbar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 393px;
+  height: 54px;
+  padding: 0 32px 0 34px;
+  color: #000000;
+  pointer-events: none;
+}
+
+.statusbar__time {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.statusbar__icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusbar__icon { height: 12px; width: auto; display: block; }
+.statusbar__icon--battery { height: 13px; }
+
+/* 125 x 36, 11pt from the top — iPhone 16 Dynamic Island */
+.island {
+  position: absolute;
+  left: 50%;
+  top: 11px;
+  z-index: 4;
+  width: 125px;
+  height: 36px;
+  border-radius: 18px;
+  background: #000000;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* 139 x 5, 8pt from the bottom. Draws over the tab bar, as on iOS. */
+.homebar {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  z-index: 4;
+  width: 139px;
+  height: 5px;
+  border-radius: 3px;
+  background: #000000;
+  opacity: 0.85;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Everything above the tab bar. 852 - 68 = 784 of visible window. */
+.screen__scroll {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(852px - 68px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;            /* a phone doesn't show a track */
+}
+.screen__scroll::-webkit-scrollbar { display: none; }
+
+/* The Figma canvas itself. Height 928 keeps the 49px gap between the
+   medicine card (ends 879) and the tab bar exactly as drawn, and every
+   child keeps its original frame coordinate because this box starts at
+   the frame origin. The gradient stop is written in px, not %, so it
+   lands at Figma's 349.6px regardless of this container's height. */
+.screen__canvas {
+  position: relative;
+  width: 393px;
+  height: 928px;
+  background: linear-gradient(to bottom, #ffffff 0px, var(--gradient-end) 349.6px);
+}
+
+/* The default weight is set on the CONTAINER so it inherits. Putting
+   `font-weight: 400` on `.screen p` instead gave that reset specificity
+   (0,1,1), which out-ranked every single-class rule asking for Medium
+   (0,1,0) — so every Poppins Medium heading silently rendered Regular.
+   Only the <span> values escaped it. Keep weight out of this reset. */
+.screen { font-weight: 400; }
+
+/* Wrapped in :where() so this reset carries ZERO specificity. It still
+   beats the UA stylesheet (author rules always do), but it no longer
+   out-ranks the component classes that style these elements.
+
+   As a plain `.screen p, .screen h1` selector it was (0,1,1) and quietly
+   won against every single-class rule: it forced Poppins Medium headings
+   back to Regular across the whole app, kept the visit-detail summary and
+   the Telmisartan "How to take" value from wrapping, and pinned the
+   Add-visit title to the gutter under its own back caret. Four separate
+   bugs, one selector. */
+:where(.screen p, .screen h1, .screen h2) {
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Shared card chrome */
+.card {
+  position: absolute;
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+
+/* ---- Tab bar ---------------------------------------------- */
+/* Pinned to the viewport, not to the canvas — a bottom tab bar stays
+   put while the content moves under it. */
+.tabbar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 393px;
+  height: 68px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+/* Four tabs, positioned from component 4:759. Each anchor is placed at
+   its LABEL's x so the label needs no offset; the icon carries the
+   small delta Figma gives it. */
+.tabbar__item {
+  position: absolute;
+  top: 0;
+  height: 52px;
+  text-decoration: none;
+}
+
+.tabbar__icon {
+  position: absolute;
+  top: 8px;
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.tabbar__label {
+  position: absolute;
+  left: 0;
+  top: 37px;
+  height: 15px;
+  font-size: 10px;
+  line-height: 15px;
+  color: var(--text-300);
+  white-space: nowrap;
+}
+
+.tabbar__item.is-active .tabbar__label { color: var(--blue); }
+
+.tabbar__item--home     { left: 38px;  width: 30px; }
+.tabbar__item--home     .tabbar__icon { left: 1px; }
+
+.tabbar__item--visits   { left: 131px; width: 26px; }
+.tabbar__item--visits   .tabbar__icon { left: -1px; }
+
+.tabbar__item--medicine { left: 219px; width: 46px; }
+.tabbar__item--medicine .tabbar__icon { left: 9px; }
+
+.tabbar__item--settings { left: 320px; width: 41px; }
+.tabbar__item--settings .tabbar__icon { left: 7px; }
+
+/* ---- Small viewports: scale the whole device, never reflow it ---
+   415 = 393 screen + 2 x 11 bezel. */
+@media (max-width: 470px) {
+  body { align-items: flex-start; padding: 12px 0; }
+  .device {
+    transform: scale(calc((100vw - 16px) / 415));
+    transform-origin: top center;
+  }
+}

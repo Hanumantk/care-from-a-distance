@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Parent Health App — Upcoming visit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="upcoming-visit.css" />
+</head>
+<body>
+  <!-- ── iPhone 16 device shell ──────────────────────────────── -->
+  <div class="device">
+    <div class="device__btn device__btn--action"></div>
+    <div class="device__btn device__btn--volup"></div>
+    <div class="device__btn device__btn--voldown"></div>
+    <div class="device__btn device__btn--power"></div>
+
+    <div class="device__screen">
+
+  <!-- Upcoming visit detail. Same header component as "iPhone 16 - 3"
+       (the 28 SEP view) — caret, title, eyebrow, chip, date, hospital,
+       reason, rule — but the body carries only what exists BEFORE a
+       visit happens. No summary, prescription or recording: none of
+       those can exist yet. -->
+  <div class="screen">
+
+   <div class="screen__scroll">
+    <div class="screen__canvas">
+
+     <!-- ── Header ─────────────────────────────────────────── -->
+     <div class="uv-head">
+       <a class="uv-back" href="visits.html" aria-label="Back to Visits">
+         <img src="assets/caret-left.svg" alt="" />
+       </a>
+
+       <h1 class="uv-title">Visits</h1>
+
+       <button class="uv-delete" id="deleteVisit" type="button">
+         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+           <path d="M2.5 4h11M6.2 4V2.8a.8.8 0 0 1 .8-.8h2a.8.8 0 0 1 .8.8V4M12.3 4l-.6 8.6a1 1 0 0 1-1 .9H5.3a1 1 0 0 1-1-.9L3.7 4"
+                 stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+           <path d="M6.6 6.8v4M9.4 6.8v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+         </svg>
+         <span>Delete</span>
+       </button>
+
+       <p class="uv-ago" id="ago">In 4 days</p>
+
+       <div class="chip chip--helper" id="helperChip">
+         <span class="chip__label">Helper assigned</span>
+       </div>
+
+       <p class="uv-date" id="date">24 OCT</p>
+
+       <div class="uv-hospital">
+         <p class="uv-hospital__name" id="hospital">Hedgewar hospital</p>
+         <p class="uv-hospital__doctor" id="doctor">Dr Ranjana Deshmukh</p>
+       </div>
+
+       <div class="uv-reason">
+         <p class="uv-reason__label">Reason</p>
+         <p class="uv-reason__text" id="reason">Monthly follow up appointment</p>
+       </div>
+
+       <img class="uv-rule" src="assets/vd-line344.svg" alt="" />
+     </div>
+
+     <!-- ── Body ───────────────────────────────────────────── -->
+     <div class="uv-body">
+
+       <!-- When -->
+       <section class="uv-block">
+         <p class="uv-block__label">When</p>
+         <p class="uv-when" id="whenLong">Saturday, 24 October</p>
+         <p class="uv-when__sub" id="whenSub">11:00 am at the clinic</p>
+       </section>
+
+       <!-- Helper -->
+       <section class="uv-block" id="helperBlock">
+         <p class="uv-block__label">Helper</p>
+
+         <div class="uv-helper">
+           <div class="uv-helper__top">
+             <img class="uv-helper__avatar" src="assets/set-avatar.svg" alt="" />
+             <div class="uv-helper__body">
+               <p class="uv-helper__name" id="helperName">Suresh Patil</p>
+               <p class="uv-helper__role" id="helperRole">Escort to hospital</p>
+             </div>
+             <span class="uv-helper__badge">Assigned</span>
+           </div>
+
+           <div class="uv-helper__rule"></div>
+
+           <div class="uv-helper__row">
+             <p class="uv-helper__k">Picks up at</p>
+             <p class="uv-helper__v" id="pickup">10:15 am</p>
+           </div>
+           <div class="uv-helper__row">
+             <p class="uv-helper__k">From</p>
+             <p class="uv-helper__v" id="address">12 Shivaji Nagar, Garkheda</p>
+           </div>
+         </div>
+
+         <div class="uv-notice">
+           <span class="uv-notice__tick" aria-hidden="true"></span>
+           <span>Helper details will be shared a day before the visit.</span>
+         </div>
+       </section>
+
+       <!-- Questions -->
+       <section class="uv-block" id="questionsBlock">
+         <p class="uv-block__label">Questions for the doctor</p>
+         <ol class="uv-qlist" id="questions">
+           <li>&ldquo;BP rising in the last 2 weeks, is 80 mg enough?&rdquo;</li>
+         </ol>
+         <p class="uv-sub">Aai can add her own before the visit &mdash; they appear here too.</p>
+       </section>
+
+       <!-- Tests -->
+       <section class="uv-block" id="testsBlock">
+         <p class="uv-block__label">Tests to do at this visit</p>
+         <ul class="uv-list" id="tests">
+           <li>HbA1c</li>
+           <li>Kidney function</li>
+         </ul>
+       </section>
+
+       <!-- After the visit -->
+       <section class="uv-block" id="afterBlock">
+         <p class="uv-block__label">After the visit</p>
+         <p class="uv-after" id="afterText">Medicines will be bought on the way back.</p>
+       </section>
+
+       <!-- Care circle -->
+       <section class="uv-block">
+         <p class="uv-block__label">Who else is notified</p>
+         <div class="uv-people">
+           <img src="assets/set-avatar.svg" alt="" />
+           <img src="assets/set-avatar.svg" alt="" />
+           <div>
+             <p class="uv-people__names" id="notified">Hanu, Abhishek</p>
+             <p class="uv-people__sub">From Care Circle</p>
+           </div>
+         </div>
+       </section>
+
+     </div><!-- /.uv-body -->
+
+    </div><!-- /.screen__canvas -->
+   </div><!-- /.screen__scroll -->
+
+    <!-- Deleting a booked visit cancels a helper and tells three people,
+         so it asks first. Lives outside .screen__scroll so it covers the
+         tab bar too. -->
+    <div class="uv-sheet" id="deleteSheet" hidden>
+      <div class="uv-sheet__scrim" data-close></div>
+      <div class="uv-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+        <p class="uv-sheet__title" id="sheetTitle">Delete this visit?</p>
+        <p class="uv-sheet__body" id="sheetBody">
+          The 24 OCT appointment will be removed. Suresh Patil and the Care Circle
+          will be told it is cancelled.
+        </p>
+        <div class="uv-sheet__actions">
+          <button class="uv-sheet__btn uv-sheet__btn--keep" type="button" data-close>Keep visit</button>
+          <button class="uv-sheet__btn uv-sheet__btn--del" id="confirmDelete" type="button">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab bar — "Navigation bar reports selected" (4:785), since this
+         screen sits under the Visits tab, same as the 28 SEP view. -->
+    <nav class="tabbar">
+      <a class="tabbar__item tabbar__item--home" href="index.html">
+        <img class="tabbar__icon" src="assets/nav3-home.svg" alt="" />
+        <span class="tabbar__label">Home</span>
+      </a>
+      <a class="tabbar__item tabbar__item--visits is-active" href="visits.html">
+        <img class="tabbar__icon" src="assets/nav3-visits.svg" alt="" />
+        <span class="tabbar__label">Visits</span>
+      </a>
+      <a class="tabbar__item tabbar__item--medicine" href="medicine.html">
+        <img class="tabbar__icon" src="assets/nav3-medicine.svg" alt="" />
+        <span class="tabbar__label">Medicine</span>
+      </a>
+      <a class="tabbar__item tabbar__item--settings" href="settings.html">
+        <img class="tabbar__icon" src="assets/nav3-settings.svg" alt="" />
+        <span class="tabbar__label">Settings</span>
+      </a>
+    </nav>
+
+  </div><!-- /.screen -->
+
+      <!-- ── iOS chrome ─────────────────────────────────────── -->
+      <div class="statusbar" aria-hidden="true">
+        <span class="statusbar__time">8:12</span>
+        <span class="statusbar__icons">
+          <svg class="statusbar__icon" viewBox="0 0 17 12" fill="currentColor">
+            <rect x="0"    y="8"   width="3" height="4"  rx="1" />
+            <rect x="4.7"  y="5.5" width="3" height="6.5" rx="1" />
+            <rect x="9.4"  y="3"   width="3" height="9"  rx="1" />
+            <rect x="14.1" y="0"   width="3" height="12" rx="1" />
+          </svg>
+          <svg class="statusbar__icon" viewBox="0 0 16 12">
+            <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M1.2 4.3a10 10 0 0 1 13.6 0" />
+              <path d="M3.9 7.1a6.4 6.4 0 0 1 8.2 0" />
+            </g>
+            <circle cx="8" cy="10.1" r="1.35" fill="currentColor" />
+          </svg>
+          <svg class="statusbar__icon statusbar__icon--battery" viewBox="0 0 27 13">
+            <rect x="0.6" y="0.6" width="22.8" height="11.8" rx="3.6"
+                  fill="none" stroke="currentColor" stroke-opacity="0.38" stroke-width="1.1" />
+            <rect x="2.2" y="2.2" width="16.5" height="8.6" rx="2.1" fill="currentColor" />
+            <path d="M25.2 4.6v3.8a2.4 2.4 0 0 0 0-3.8z" fill="currentColor" fill-opacity="0.4" />
+          </svg>
+        </span>
+      </div>
+
+      <div class="island" aria-hidden="true"></div>
+      <div class="homebar" aria-hidden="true"></div>
+
+    </div><!-- /.device__screen -->
+  </div><!-- /.device -->
+
+<script src="app.js"></script>
+<script src="upcoming-visit.js"></script>
+</body>
+</html>

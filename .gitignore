@@ -1,0 +1,24 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Node (none committed today, but http-server is run via npx)
+node_modules/
+npm-debug.log*
+
+# ---------------------------------------------------------------
+# BCG's take-home brief is reproduced verbatim in this file. It is
+# their assessment material, not mine to republish, and putting it in
+# a public repo also hands the task to the next candidate who searches
+# for it. Excluded by default.
+#
+# If this repo is private and you want the brief tracked with the
+# work, delete the line below.
+# ---------------------------------------------------------------
+BCG_design_task_CONTEXT.md

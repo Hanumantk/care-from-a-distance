@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Parent Health App — Visits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="visits.css" />
+</head>
+<body>
+  <!-- ── iPhone 16 device shell ──────────────────────────────── -->
+  <div class="device">
+    <div class="device__btn device__btn--action"></div>
+    <div class="device__btn device__btn--volup"></div>
+    <div class="device__btn device__btn--voldown"></div>
+    <div class="device__btn device__btn--power"></div>
+
+    <div class="device__screen">
+
+  <!-- iPhone 16 - 2 · 393 x 852.
+       Content ends at 696 and the tab bar sits at 784, so this screen
+       fits the viewport with nothing to scroll. -->
+  <div class="screen" data-node-id="4:135">
+
+   <div class="screen__scroll">
+    <div class="screen__canvas">
+
+    <h1 class="page-title" data-node-id="4:137">Visits</h1>
+
+    <a class="btn-add-visit" href="add-visit.html" data-node-id="4:138">
+      <img class="btn-add-visit__icon" src="assets/icon-add.svg" alt="" data-node-id="4:234" />
+      <span class="btn-add-visit__label" data-node-id="4:223">Add New Visit</span>
+    </a>
+
+    <!-- The three visits drawn in Figma. visits.js replaces this list
+         with the same three merged with any the user has confirmed,
+         sorted by date � so with JS off the designed screen still
+         renders exactly as drawn. -->
+    <div id="visitList">
+
+    <!-- ── Upcoming visit — filled blue ─────────────────────── -->
+    <a class="card visit visit--upcoming" href="upcoming-visit.html?id=seed-1" data-node-id="4:139">
+      <p class="visit__eyebrow" data-node-id="4:140">Upcoming visit</p>
+
+      <div class="chip chip--helper" data-node-id="4:142">
+        <span class="chip__label" data-node-id="4:143">Helper assigned</span>
+      </div>
+
+      <p class="visit__date" data-node-id="4:145">24 OCT</p>
+      <p class="visit__place" data-node-id="4:146">Hedgewar hospital</p>
+      <p class="visit__doctor" data-node-id="4:147">Dr Ranjana Deshmukh</p>
+      <img class="visit__divider" src="assets/divider-visit.svg" alt="" data-node-id="4:378" />
+      <p class="visit__reason-label" data-node-id="4:141">Reason</p>
+      <p class="visit__reason" data-node-id="4:144">Monthly follow up appointment</p>
+    </a>
+
+    <!-- ── Past visit · 28 Sep ──────────────────────────────── -->
+    <a class="card visit visit--past" href="visit-detail.html" data-node-id="4:244">
+      <p class="visit__eyebrow" data-node-id="4:245">22 days ago</p>
+
+      <div class="chip chip--done" data-node-id="4:247">
+        <span class="chip__label" data-node-id="4:248">Completed</span>
+      </div>
+
+      <p class="visit__date" data-node-id="4:250">28 SEP</p>
+      <p class="visit__place" data-node-id="4:251">Hedgewar hospital</p>
+      <p class="visit__doctor" data-node-id="4:252">Dr Ranjana Deshmukh</p>
+      <img class="visit__divider" src="assets/divider-visit.svg" alt="" data-node-id="4:379" />
+      <p class="visit__reason-label" data-node-id="4:246">Reason</p>
+      <p class="visit__reason" data-node-id="4:249">Monthly follow up appointment</p>
+    </a>
+
+    <!-- ── Past visit · 4 Sep ───────────────────────────────── -->
+    <section class="card visit visit--past" data-node-id="4:253">
+      <p class="visit__eyebrow" data-node-id="4:254">46 days ago</p>
+
+      <div class="chip chip--done" data-node-id="4:256">
+        <span class="chip__label" data-node-id="4:257">Completed</span>
+      </div>
+
+      <p class="visit__date" data-node-id="4:259">4 SEP</p>
+      <p class="visit__place" data-node-id="4:260">Hedgewar hospital</p>
+      <p class="visit__doctor" data-node-id="4:261">Dr Nikhil Kulkarni</p>
+      <img class="visit__divider" src="assets/divider-visit.svg" alt="" data-node-id="4:380" />
+      <p class="visit__reason-label" data-node-id="4:255">Reason</p>
+      <p class="visit__reason" data-node-id="4:258">Cold and fever viral infection</p>
+    </section>
+
+    </div><!-- /#visitList -->
+
+    </div><!-- /.screen__canvas -->
+   </div><!-- /.screen__scroll -->
+
+    <div class="toast" id="toast" hidden>
+      <span class="toast__tick" aria-hidden="true"></span>
+      <span>Visit added. Helper details a day before.</span>
+    </div>
+
+    <!-- ── Tab bar ──────────────────────────────────────────────
+         Component "Navigation bar reports selected" (4:785). -->
+    <nav class="tabbar" data-node-id="4:785">
+      <a class="tabbar__item tabbar__item--home" href="index.html" data-node-id="4:790">
+        <img class="tabbar__icon" src="assets/nav3-home.svg" alt="" />
+        <span class="tabbar__label" data-node-id="4:786">Home</span>
+      </a>
+      <a class="tabbar__item tabbar__item--visits is-active" href="#" data-node-id="4:753">
+        <img class="tabbar__icon" src="assets/nav3-visits.svg" alt="" />
+        <span class="tabbar__label" data-node-id="4:787">Visits</span>
+      </a>
+      <a class="tabbar__item tabbar__item--medicine" href="medicine.html" data-node-id="4:798">
+        <img class="tabbar__icon" src="assets/nav3-medicine.svg" alt="" />
+        <span class="tabbar__label" data-node-id="4:789">Medicine</span>
+      </a>
+      <a class="tabbar__item tabbar__item--settings" href="settings.html" data-node-id="4:794">
+        <img class="tabbar__icon" src="assets/nav3-settings.svg" alt="" />
+        <span class="tabbar__label" data-node-id="4:788">Settings</span>
+      </a>
+    </nav>
+
+  </div><!-- /.screen -->
+
+      <!-- ── iOS chrome ─────────────────────────────────────── -->
+      <div class="statusbar" aria-hidden="true">
+        <span class="statusbar__time">8:12</span>
+        <span class="statusbar__icons">
+          <svg class="statusbar__icon" viewBox="0 0 17 12" fill="currentColor">
+            <rect x="0"    y="8"   width="3" height="4"  rx="1" />
+            <rect x="4.7"  y="5.5" width="3" height="6.5" rx="1" />
+            <rect x="9.4"  y="3"   width="3" height="9"  rx="1" />
+            <rect x="14.1" y="0"   width="3" height="12" rx="1" />
+          </svg>
+          <svg class="statusbar__icon" viewBox="0 0 16 12">
+            <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M1.2 4.3a10 10 0 0 1 13.6 0" />
+              <path d="M3.9 7.1a6.4 6.4 0 0 1 8.2 0" />
+            </g>
+            <circle cx="8" cy="10.1" r="1.35" fill="currentColor" />
+          </svg>
+          <svg class="statusbar__icon statusbar__icon--battery" viewBox="0 0 27 13">
+            <rect x="0.6" y="0.6" width="22.8" height="11.8" rx="3.6"
+                  fill="none" stroke="currentColor" stroke-opacity="0.38" stroke-width="1.1" />
+            <rect x="2.2" y="2.2" width="16.5" height="8.6" rx="2.1" fill="currentColor" />
+            <path d="M25.2 4.6v3.8a2.4 2.4 0 0 0 0-3.8z" fill="currentColor" fill-opacity="0.4" />
+          </svg>
+        </span>
+      </div>
+
+      <div class="island" aria-hidden="true"></div>
+      <div class="homebar" aria-hidden="true"></div>
+
+    </div><!-- /.device__screen -->
+  </div><!-- /.device -->
+<script src="app.js"></script>
+<script src="visits.js"></script>
+</body>
+</html>

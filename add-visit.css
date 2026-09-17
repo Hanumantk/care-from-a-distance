@@ -1,0 +1,578 @@
+/* ============================================================
+   Add visit — form + review
+   NOT a Figma sync: these two screens don't exist in the file. Built
+   from the prototype's own vocabulary so they sit beside the other
+   five without looking bolted on:
+
+     surfaces   white card, radius 14, 0.2px #4d76ff edge (the
+                Settings / All-tablets row treatment)
+     selected   #4d76ff fill, white label  (the Caretaker-1 row)
+     unselected #eaefff chip               (the meal chips)
+     positive   rgba(47,210,112,.18) + #0b9241  (Helper assigned)
+     dividers   #BFD0FF at 0.5px
+     type       28/500 title, 16/500 heading, 12/400 body,
+                12/400 #6e6e6e section label, 10/400 meta
+
+   The five synced screens are absolutely positioned because they had
+   to land on Figma coordinates. These are authored, so they use flow
+   layout on the same 24px gutter — same result, far easier to edit.
+   ============================================================ */
+
+@import url("shell.css");
+
+/* Task flow: no tab bar, so the scroller runs to the sticky footer. */
+.screen__scroll { height: calc(852px - var(--cta-h)); }
+/* Figma leaves 82 between the last section (bottom 2858) and the footer
+   (top 2940), which is also what lets the final card clear the sticky CTA
+   when the form is scrolled to the end. */
+.screen__canvas { height: auto; min-height: calc(852px - var(--cta-h)); padding-bottom: 82px; }
+
+:root { --cta-h: 84px; }
+
+.screen .av-wrap p,
+.screen .av-wrap span,
+.screen .av-wrap h1,
+.screen .av-wrap h2 { white-space: normal; }
+
+.av-wrap { padding: 0 24px; }
+
+/* ---- Header ------------------------------------------------- */
+.av-head { position: relative; padding-top: 110px; }   /* title top 110, matching visit-detail 4:263 */
+
+/* Back caret — DEVIATION from Figma (y 119 -> 113), made on request.
+   Figma parks this 24px box so its centre lands on 131. The title
+   beside it is Poppins 28/500 in a 31px box, which puts its baseline on
+   135 and its cap top on 115 — an optical centre of 125. The caret as
+   drawn therefore sat 6px below the word it belongs to. Centring on the
+   cap band rather than on the text node's box is what reads as level,
+   because the box carries leading the glyphs never fill. */
+.av-back {
+  position: absolute;
+  left: -6px;
+  top: 113px;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+.av-back img { width: 24px; height: 24px; display: block; }
+.av-back::after { content: ""; position: absolute; inset: -10px; }
+.av-back:active { transform: scale(0.92); }
+
+.av-title {
+  margin: 0 0 0 31px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 31px;
+  color: #000000;
+}
+
+.av-step {
+  margin: 6px 0 0 31px;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--text-400);
+}
+
+/* ---- Sections ----------------------------------------------- */
+/* Figma: every top-level group in "iPhone 16 - 6" is 48 below the one
+   above it — header 162 -> label 210, and 48 between all thirteen after. */
+.av-section { margin-top: 48px; }
+
+.av-section__label {
+  margin: 0 0 10px;
+  font-size: 12px;
+  /* h2 is bold by UA default — the prototype sets section labels at
+     Regular (visit-detail 4:311 etc), so declare it, never inherit. */
+  font-weight: 400;
+  line-height: 13px;
+  color: var(--text-500);
+}
+
+.av-sub {
+  /* 10, not 8 — the Doctor, Time and Questions groups all run on the
+     section's own 10px rhythm in Figma. */
+  margin: 10px 0 0;
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--text-400);
+}
+
+.av-field + .av-field,
+.av-field + .av-seg,
+.av-seg + .av-field,
+.av-seg + .av-seg,
+.av-chips + .av-field,
+.av-field + .av-chips,
+.av-seg + .av-chips,
+.av-chips + .av-chips,
+.av-chips + .av-note,
+.av-chips + .av-seg { margin-top: 10px; }
+
+/* ---- Card surface ------------------------------------------- */
+.av-card {
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+}
+
+/* ---- Search ------------------------------------------------- */
+.av-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 16px;
+}
+.av-search svg { flex: 0 0 auto; color: var(--text-400); }
+.av-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-900);
+}
+.av-search input::placeholder { color: var(--text-400); }
+.av-search:focus-within { box-shadow: inset 0 0 0 1.5px var(--blue); border-radius: 14px; }
+
+/* ---- Pick rows (hospital, doctor, helper) ------------------- */
+.av-pick {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.av-pick__avatar { flex: 0 0 auto; width: 40px; height: 40px; display: block; }
+
+.av-pick__body { flex: 1; min-width: 0; }
+.av-pick__name { margin: 0; font-size: 16px; font-weight: 500; line-height: 20px; color: var(--text-900); }
+.av-pick__sub  { margin: 2px 0 0; font-size: 12px; line-height: 15px; color: var(--text-700); }
+
+.av-pick.is-on { background: var(--blue); }
+.av-pick.is-on .av-pick__name { color: #ffffff; }
+.av-pick.is-on .av-pick__sub  { color: #d7dfff; }
+
+/* The tick that marks the chosen option */
+.av-tick {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  position: relative;
+}
+.av-tick::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 8px;
+  height: 4px;
+  border-left: 1.8px solid var(--blue);
+  border-bottom: 1.8px solid var(--blue);
+  rotate: -45deg;
+}
+
+.av-pick__meta {
+  flex: 0 0 auto;
+  font-size: 10px;
+  line-height: 15px;
+  padding: 0 10px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-chip);
+  background: var(--chip-helper-bg);
+  color: var(--chip-helper-ink);
+  white-space: nowrap;
+}
+
+.av-divider { height: 0.5px; margin: 0 16px; background: #bfd0ff; }
+
+/* ---- Chips --------------------------------------------------- */
+.av-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.av-chip {
+  height: 32px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 19px;
+  background: #eaefff;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1;
+  color: #1c1c1c;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.av-chip.is-on { background: var(--blue); color: #ffffff; }
+.av-chip--add { background: transparent; box-shadow: inset 0 0 0 0.6px var(--blue); color: var(--blue); }
+
+/* ---- Segmented ---------------------------------------------- */
+.av-seg {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+}
+.av-seg__opt {
+  flex: 1;
+  min-width: 0;
+  height: 36px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--text-600);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.av-seg__opt.is-on { background: var(--blue); color: #ffffff; font-weight: 500; }
+
+/* ---- Calendar ------------------------------------------------ */
+.av-cal { padding: 16px; }
+
+.av-cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.av-cal__month { margin: 0; font-size: 16px; font-weight: 500; line-height: 20px; color: var(--text-900); }
+.av-cal__legend { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-400); }
+.av-cal__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+
+.av-cal table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.av-cal th {
+  padding-bottom: 8px;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-400);
+}
+.av-cal td { padding: 2px 0; text-align: center; }
+
+.av-day {
+  width: 34px;
+  height: 34px;
+  /* Non-bookable days render as <span>, bookable ones as <button>. A span is
+     inline, so width/height were ignored on it: those numerals collapsed to a
+     16.5px line box and sat on the cell's baseline, 10px above the 34px
+     circles in the same week. inline-flex gives both the same box, which is
+     also how the Figma frame is built. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--text-200);
+  cursor: default;
+  position: relative;
+}
+.av-day.is-free { color: var(--text-900); cursor: pointer; }
+/* A dot under the numeral marks a day the doctor has slots */
+.av-day.is-free::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--blue);
+  transform: translateX(-50%);
+}
+.av-day.is-on { background: var(--blue); color: #ffffff; font-weight: 500; }
+.av-day.is-on::after { background: #ffffff; }
+
+/* ---- Note field ---------------------------------------------- */
+.av-note {
+  /* block, not the textarea default inline-block — inline-block put the
+     field on a text baseline and hung ~6.5px of descender space under it,
+     which Figma has no equivalent for. */
+  display: block;
+  width: 100%;
+  min-height: 72px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-700);
+  resize: none;
+  outline: none;
+}
+.av-note:focus { box-shadow: inset 0 0 0 1.5px var(--blue); }
+.av-note::placeholder { color: var(--text-400); }
+
+/* ---- Read-only value rows ------------------------------------ */
+.av-value { padding: 12px 16px; }
+.av-value__k { margin: 0; font-size: 10px; line-height: 13px; color: var(--text-400); }
+.av-value__v { margin: 3px 0 0; font-size: 14px; line-height: 19px; color: var(--text-900); }
+.av-value__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+.av-link {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--blue);
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ---- Questions ----------------------------------------------- */
+/* Figma "Question" is 96 tall because the remove control sits IN the row
+   and narrows the text column, so the question wraps to two lines. Held
+   absolute here it left the text full-width, one line, and a 77px card. */
+.av-q { padding: 14px 16px; }
+.av-q__row { display: flex; align-items: flex-start; gap: 8px; }
+.av-q__text { flex: 1; min-width: 0; }
+.av-q__text { margin: 0; font-size: 13px; line-height: 19px; color: var(--text-900); }
+.av-q__by {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  margin-top: 10px;
+  padding: 0 10px;
+  border-radius: var(--radius-chip);
+  background: #eaefff;
+  font-size: 10px;
+  color: #3b3b3b;
+}
+
+.av-actions { display: flex; gap: 8px; margin-top: 10px; }
+.av-action {
+  flex: 1;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--blue);
+  cursor: pointer;
+}
+.av-action svg { color: var(--blue); }
+
+/* ---- People -------------------------------------------------- */
+.av-people { display: flex; align-items: center; gap: 10px; padding: 12px 16px; }
+.av-people img { width: 32px; height: 32px; display: block; }
+.av-people__names { margin: 0; font-size: 13px; line-height: 17px; color: var(--text-900); }
+.av-people__sub { margin: 1px 0 0; font-size: 10px; line-height: 13px; color: var(--text-400); }
+
+/* ---- Sticky footer ------------------------------------------- */
+.av-footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  width: 393px;
+  height: var(--cta-h);
+  padding: 12px 24px 0;
+  background: var(--surface-card);
+  box-shadow: 0 -1px 3px rgba(21, 25, 31, 0.05);
+}
+
+.av-cta {
+  width: 345px;
+  height: 52px;
+  border: 0;
+  border-radius: 30px;
+  background: var(--blue);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.av-cta:hover  { filter: brightness(1.06); }
+.av-cta:active { transform: scale(0.99); }
+
+/* ---- Review -------------------------------------------------- */
+.av-summary { padding: 4px 0; }
+.av-summary__row { padding: 14px 16px; }
+.av-summary__k { margin: 0; font-size: 10px; line-height: 13px; color: var(--text-400); }
+.av-summary__v { margin: 4px 0 0; font-size: 14px; line-height: 19px; color: var(--text-900); }
+.av-summary__v--lg { font-size: 20px; font-weight: 500; line-height: 24px; }
+.av-summary__extra { margin: 3px 0 0; font-size: 12px; line-height: 16px; color: var(--text-700); }
+
+.av-summary__q { margin: 8px 0 0; padding-left: 14px; font-size: 12px; line-height: 17px; color: var(--text-700); position: relative; }
+.av-summary__q::before { content: ""; position: absolute; left: 0; top: 6px; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+
+.av-notice {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--chip-helper-bg);
+  font-size: 11px;
+  line-height: 16px;
+  color: #0a7a37;
+}
+.av-notice__tick {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 7px;
+  margin-top: 4px;
+  border-left: 2px solid #0b9241;
+  border-bottom: 2px solid #0b9241;
+  rotate: -45deg;
+}
+
+/* ---- Focus --------------------------------------------------- */
+:focus-visible { outline: 2px solid var(--color-focus, #0462d3); outline-offset: 2px; border-radius: 6px; }
+:focus:not(:focus-visible) { outline: none; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- Interactive additions ----------------------------------- */
+.av-empty { margin: 0; padding: 14px 16px; font-size: 12px; line-height: 16px; color: var(--text-400); }
+
+/* Calendar month paging */
+.av-cal__head { gap: 8px; }
+.av-cal__nav {
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0; border-radius: 50%; background: transparent; cursor: pointer;
+}
+.av-cal__nav img { width: 18px; height: 18px; display: block; }
+.av-cal__nav--next img { transform: rotate(180deg); }
+.av-cal__nav:disabled { opacity: 0.25; cursor: default; }
+.av-cal__month { flex: 1; text-align: center; }
+.av-cal__legend { margin: 0 0 12px; justify-content: center; }
+
+/* Question composer */
+.av-composer { padding: 12px; margin-top: 10px; }
+.av-composer textarea {
+  width: 100%; min-height: 56px; border: 0; outline: none; resize: none;
+  background: transparent; font-family: inherit; font-size: 13px;
+  line-height: 18px; color: var(--text-900);
+}
+.av-composer textarea::placeholder { color: var(--text-400); }
+.av-composer__row { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 8px; }
+.av-composer__save {
+  height: 32px; padding: 0 16px; border: 0; border-radius: 19px;
+  background: var(--blue); color: #fff; font-family: inherit;
+  font-size: 12px; font-weight: 500; cursor: pointer;
+}
+
+/* Remove a question */
+.av-q__del {
+  flex: 0 0 auto;
+  width: 28px; height: 28px; border: 0; border-radius: 50%;
+  margin: -5px -8px 0 0;
+  background: transparent; color: var(--text-400);
+  font-size: 18px; line-height: 1; cursor: pointer;
+}
+.av-q__del:hover { color: var(--text-900); }
+
+.av-action.is-rec { background: var(--blue); color: #fff; }
+.av-action.is-rec svg { color: #fff; }
+
+/* Footer hint + disabled CTA */
+.av-cta-hint {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--text-400);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.av-footer { height: auto; padding: 10px 24px 16px; }
+.av-cta.is-off { background: #c7d0e8; cursor: not-allowed; }
+.av-cta.is-off:hover { filter: none; }
+.av-cta.is-off:active { transform: none; }
+
+/* ============================================================
+   Spacing synced from Figma "iPhone 16 - 6" (node 18:2).
+
+   The frame is no longer one auto-layout column: each group is placed
+   directly on the frame at x=24 / w=345, 48 apart. Three groups were
+   also re-nested, and those are reproduced literally below rather than
+   approximated:
+
+     Frame 62  label "Helper" + the five helper controls (12, then 16)
+     Frame 63  the settings note now HEADS the pickup pair (12 apart)
+     Frame 64  Buy medicines + Recording bracketed together (20 apart)
+   ============================================================ */
+
+/* Frame 62 / Frame 61 — and the Hospital group, which also opens at 12. */
+#hospitalSection .av-section__label,
+#helperSection .av-section__label { margin-bottom: 12px; }
+
+/* Hospital: search sits 16 above the results card, not 10. */
+#hospitalSection .av-search + .av-field { margin-top: 16px; }
+
+/* Helper: the five controls run at a uniform 16, across the
+   #helperDetails wrapper as well as within it. */
+#helperSection #helperDetails,
+#helperSection .av-seg + .av-seg,
+#helperSection .av-seg + .av-chips,
+#helperSection .av-chips + .av-field,
+#helperSection .av-field + .av-seg { margin-top: 16px; }
+
+/* Frame 63 — ID selectors here so they outrank .av-sub's own margin. */
+#pickupSection > * + * { margin-top: 12px; }
+#pickupSection > :first-child { margin-top: 0; }
+
+/* Frame 64 — the bracket takes the 48, its two members sit 20 apart. */
+.av-group { margin-top: 48px; }
+.av-group > .av-section { margin-top: 0; }
+.av-group > .av-section + .av-section { margin-top: 20px; }
+
+/* ------------------------------------------------------------
+   Review keeps the ORIGINAL rhythm. Node 18:3 is untouched in
+   Figma — its column still runs at a 28 gap with 28 of bottom
+   padding, so the 48/82 above must not reach this page. Both
+   selectors are (0,2,0) and win on specificity alone.
+   ------------------------------------------------------------ */
+.av-wrap--review .av-section { margin-top: 28px; }
+.screen--review .screen__canvas { padding-bottom: 28px; }
