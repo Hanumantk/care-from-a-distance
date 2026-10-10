@@ -54,6 +54,12 @@
   /* Device shell */
   --bezel:           11px;
   --screen-radius:   55px;
+
+  /* The viewport the design was drawn against. On a real phone the
+     media query at the bottom of this file swaps the height for the
+     device's own, so the tab bar pins to the true bottom edge instead
+     of to an imaginary 852. */
+  --screen-h:        852px;
 }
 
 * { box-sizing: border-box; }
@@ -95,7 +101,7 @@ body {
 .device__screen {
   position: relative;
   width: 393px;
-  height: 852px;
+  height: var(--screen-h);
   overflow: hidden;
   border-radius: var(--screen-radius);
   background: #000000;
@@ -121,7 +127,7 @@ body {
 .screen {
   position: relative;
   width: 393px;
-  height: 852px;
+  height: var(--screen-h);
   overflow: hidden;
   background: var(--gradient-end);
 }
@@ -193,7 +199,7 @@ body {
   left: 0;
   right: 0;
   top: 0;
-  height: calc(852px - 68px);
+  height: calc(var(--screen-h) - 68px);
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
@@ -302,12 +308,70 @@ body {
 .tabbar__item--settings { left: 320px; width: 41px; }
 .tabbar__item--settings .tabbar__icon { left: 7px; }
 
-/* ---- Small viewports: scale the whole device, never reflow it ---
-   415 = 393 screen + 2 x 11 bezel. */
-@media (max-width: 470px) {
-  body { align-items: flex-start; padding: 12px 0; }
-  .device {
-    transform: scale(calc((100vw - 16px) / 415));
-    transform-origin: top center;
+/* The rule that used to live here tried
+     transform: scale(calc((100vw - 16px) / 415))
+   which never did anything: dividing a length by a number gives a
+   length, and scale() only takes a number, so the browser dropped the
+   declaration and kept only the body padding that came with it. The
+   phone handling below replaces it properly. */
+
+
+/* ============================================================
+   Real phones
+   ------------------------------------------------------------
+   viewport.js has already told the browser to lay this page out at
+   393 and scale it to the physical screen, so the CSS viewport here
+   is exactly the design width and nothing needs to move sideways.
+   What does need to go is the hardware mock. A bezel, a fake status
+   bar, a fake Dynamic Island and a fake home indicator are all things
+   the actual device already has — drawing a second set on top of the
+   real ones looks like a bug, not a prototype.
+
+   Height is the one thing that genuinely varies: 852 was the iPhone 16
+   figure, but a 16:9 Android or a browser with its URL bar showing has
+   less. --screen-h becomes the live viewport so the tab bar pins to the
+   real bottom edge and the scroller gets the real remaining space.
+   100dvh (not vh) so it tracks the URL bar sliding away.
+   ============================================================ */
+@media (max-width: 440px) {
+  :root { --screen-h: 100dvh; }
+
+  /* No centring: the app is the page now. */
+  body {
+    display: block;
+    padding: 0;
+    min-height: 100dvh;
+    background: var(--gradient-end);
+    /* On a 320px screen the layout viewport rounds to 394 rather than
+       393, which left a 1px horizontal scroll. Nothing here is ever
+       meant to pan sideways, so clamp it. */
+    overflow-x: hidden;
   }
+
+  .device {
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .device__btn { display: none; }
+
+  .device__screen {
+    width: 100%;
+    max-width: 393px;
+    margin: 0 auto;
+    height: var(--screen-h);
+    border-radius: 0;
+  }
+
+  /* The phone draws its own, and better. */
+  .statusbar,
+  .island,
+  .homebar { display: none; }
+
+  .screen { width: 100%; }
+
+  /* These are pinned at the design width; let them take the viewport. */
+  .screen__canvas,
+  .tabbar { width: 100%; }
 }

@@ -18,7 +18,7 @@
 
 @import url("shell.css");
 
-.screen__canvas { height: auto; min-height: 852px; padding-bottom: 96px; }
+.screen__canvas { height: auto; min-height: var(--screen-h); padding-bottom: 96px; }
 
 /* ---- Header ------------------------------------------------- */
 .uv-head { position: relative; height: 389px; }

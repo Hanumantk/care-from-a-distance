@@ -21,11 +21,11 @@
 @import url("shell.css");
 
 /* Task flow: no tab bar, so the scroller runs to the sticky footer. */
-.screen__scroll { height: calc(852px - var(--cta-h)); }
+.screen__scroll { height: calc(var(--screen-h) - var(--cta-h)); }
 /* Figma leaves 82 between the last section (bottom 2858) and the footer
    (top 2940), which is also what lets the final card clear the sticky CTA
    when the form is scrolled to the end. */
-.screen__canvas { height: auto; min-height: calc(852px - var(--cta-h)); padding-bottom: 82px; }
+.screen__canvas { height: auto; min-height: calc(var(--screen-h) - var(--cta-h)); padding-bottom: 82px; }
 
 :root { --cta-h: 84px; }
 
@@ -397,9 +397,10 @@
 .av-footer {
   position: absolute;
   left: 0;
+  right: 0;
   bottom: 0;
   z-index: var(--z-sticky);
-  width: 393px;
+  width: auto;
   height: var(--cta-h);
   padding: 12px 24px 0;
   background: var(--surface-card);

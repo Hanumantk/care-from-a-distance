@@ -22,6 +22,24 @@ Then open <http://localhost:4173/index.html>.
 Opening the files directly with `file://` will not work — the screens load
 shared stylesheets and scripts that need an HTTP origin.
 
+### On a phone
+
+Open the same URL on a handset and the app fills the screen — no tiny
+phone-inside-a-phone, and no second set of fake status bars on top of the
+real ones.
+
+Five of these screens are traced from Figma with absolutely positioned
+children on a 393px grid, so they cannot reflow to an arbitrary width
+without being redrawn. Instead `viewport.js` tells a portrait phone to lay
+the page out at 393 and scale that to the physical screen: a 360px Android
+renders at 0.92x, a 430px Pro Max at 1.09x, and every proportion stays as
+designed. Height is the part that really varies, so the frame takes
+`100dvh` — the tab bar pins to the true bottom edge and follows the URL bar
+as it slides away.
+
+Tablets and desktops keep the iPhone 16 mock, because they are wide enough
+to show the 393 frame at 1:1 and blowing it up 2x would look broken.
+
 ---
 
 ## The screens
