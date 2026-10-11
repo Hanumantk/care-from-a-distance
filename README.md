@@ -88,7 +88,8 @@ off as they are asked, and a running total with receipts. Four exceptions
 banner above everything else. Maa's location is never shown: the only map
 is the helper's route to her door, and it goes away at pickup.
 
-Home's upcoming card opens this page, and its chip follows the stage.
+Home's upcoming card opens this page, and its chip follows the stage. It
+opens mid-visit ("With doctor") until the Demo controls move it.
 
 For presenting, a small **Demo** pill in the corner steps through stages
 (or use ← and →) and picks an exception. The state is in the URL, so any
@@ -98,7 +99,7 @@ moment opens directly:
 upcoming-visit.html?id=seed-1&stage=5&issue=none
 ```
 
-`stage` runs 0 (not started) to 8; `issue` is one of `none`,
+Reset goes back to stage 1. `stage` runs 0 (the plain booking view) to 8; `issue` is one of `none`,
 `helper-late`, `doctor-absent`, `not-ready`, `emergency`.
 
 ---

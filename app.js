@@ -28,7 +28,9 @@
   /* The visit-in-progress demo: which stage the 24 OCT visit has reached
      and whether something has gone wrong. Shared so Home's card chip can
      follow the same state the visit page shows. */
-  var K_LIVE = 'pha.live.v1';
+  /* v2: the visit now opens in progress by default. A new key so a
+     "not started" saved under v1 doesn't hide the status screen. */
+  var K_LIVE = 'pha.live.v2';
   var LIVE_ID = 'seed-1';
 
   /* Chip copy, one per stage (index 0 = not started). Short enough for
@@ -36,6 +38,9 @@
   var LIVE_CHIP = ['', 'Pickup tomorrow', 'Helper on the way', 'Picked up',
                    'At hospital', 'With doctor', 'After doctor', 'Maa is home',
                    'Summary ready'];
+  /* What the prototype shows before anyone touches the Demo controls:
+     mid-visit, so tapping Home's card lands on the status screen. */
+  var LIVE_DEFAULT = { stage: 5, issue: 'none' };
   var ISSUES = ['none', 'helper-late', 'doctor-absent', 'not-ready', 'emergency'];
   var ISSUE_CHIP = { 'helper-late': 'Helper late', 'doctor-absent': 'Doctor absent',
                      'not-ready': 'Maa not ready', 'emergency': 'Emergency' };
@@ -235,7 +240,7 @@
     },
     LIVE_ID: LIVE_ID, LIVE_CHIP: LIVE_CHIP, ISSUES: ISSUES, ISSUE_CHIP: ISSUE_CHIP,
     cleanLive: cleanLive,
-    getLive: function () { return cleanLive(read(K_LIVE)); },
+    getLive: function () { return cleanLive(read(K_LIVE) || LIVE_DEFAULT); },
     setLive: function (s) { s = cleanLive(s); write(K_LIVE, s); return s; },
     resetAll: function () { drop(K_VISITS); drop(K_DRAFT); drop(K_DELETED); drop(K_LIVE); }
   };

@@ -528,8 +528,9 @@
       render({ toTop: true });
     });
     $('#demoReset').addEventListener('click', function () {
-      state = { stage: 0, issue: 'none', approved: false };
-      render();
+      // Back to the start of the visit, not to the booking view.
+      state = { stage: 1, issue: 'none', approved: false };
+      render({ toTop: true });
     });
     // Arrow keys step through stages while presenting.
     document.addEventListener('keydown', function (e) {
