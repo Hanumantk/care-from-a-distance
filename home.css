@@ -324,10 +324,10 @@
 .vital--creatinine .vital__value { width: 40px; }
 .vital--creatinine .vital__unit  { width: 40px; }
 
-.vital__edit { position: absolute; display: block; }
-.vital__edit--bp         { left: 171px; top: 14px; width: 16px;   height: 16px; }
-.vital__edit--sugar      { left: 163px; top: 14px; width: 12.5px; height: 12.5px; }
-.vital__edit--creatinine { left: 100px; top: 14px; width: 12.5px; height: 12.5px; }
+/* The pencil edit icons that sat at the top-right of BP, Sugar and
+   Creatinine (Figma 4:651 / 4:654 / 4:655) were removed on request.
+   They were never wired to anything — tapping one did nothing — so the
+   cards now make no promise of editing they can't keep. */
 
 /* ---- Target readout ----------------------------------------
    The reference range each reading is measured against. On the
