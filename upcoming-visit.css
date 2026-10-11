@@ -324,3 +324,517 @@
 /* White on #c0392b measures 5.4:1 */
 .uv-sheet__btn--del  { background: #c0392b; color: #ffffff; }
 .uv-sheet__btn:active { transform: scale(0.99); }
+
+/* ============================================================
+   Visit in progress
+   From the day before onwards this page stops being a booking and
+   becomes a status board. Hanu should be able to glance at it once and
+   go back to work: the stage in one line, who has Maa, what happened
+   when, what was asked, what it cost.
+
+   Same 24px gutter, card chrome (white, 0.2px blue hairline, 14px
+   radius) and type scale as the upcoming view above, so switching
+   between the two modes doesn't feel like a different app.
+   ============================================================ */
+
+/* The detail header collapses to just the caret and the title. */
+.is-live .uv-head { height: 150px; }
+.is-live .uv-delete,
+.is-live .uv-ago,
+.is-live .uv-head .chip,
+.is-live .uv-date,
+.is-live .uv-hospital,
+.is-live .uv-reason,
+.is-live .uv-rule,
+.is-live .uv-body { display: none; }
+
+.lv[hidden] { display: none; }
+.lv {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Everything in here is flowing copy, not a pinned Figma label. */
+.screen .lv p,
+.screen .lv-doc__photo p,
+.screen .demo p { white-space: normal; }
+
+.lv-card {
+  border-radius: 14px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 0.2px var(--blue);
+  padding: 14px 16px;
+}
+
+.lv-block { display: flex; flex-direction: column; gap: 10px; }
+.lv-block__label { font-size: 12px; line-height: 13px; color: var(--text-500); }
+
+.lv-note { font-size: 11px; line-height: 16px; color: var(--text-500); }
+
+.lv-bell { width: 13px; height: 13px; flex: 0 0 auto; display: block; fill: currentColor; }
+
+/* ---- Exception banner ---------------------------------------
+   Above everything, because when it exists it is the only thing that
+   matters. Light red for problems the app has already handled or that
+   need a decision; solid red for the emergency, where nothing else on
+   the page should compete with it. #b3261e on #fdeceb is 5.7:1. */
+.lv-banner[hidden] { display: none; }
+.lv-banner {
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: #fdeceb;
+  box-shadow: inset 0 0 0 1px rgba(192, 57, 43, 0.35);
+  color: #5c1f1a;
+}
+.lv-banner.just-in { animation: lv-in 0.32s ease-out; }
+.lv-banner__top { display: flex; align-items: flex-start; gap: 8px; }
+.lv-banner__top .lv-bell { width: 16px; height: 16px; margin-top: 2px; color: #b3261e; }
+.lv-banner__title { font-size: 15px; font-weight: 600; line-height: 20px; color: #b3261e; }
+.lv-banner__text { margin-top: 4px; font-size: 12px; line-height: 17px; }
+.lv-banner__note {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  line-height: 17px;
+}
+.lv-banner__note b { display: block; font-size: 10px; font-weight: 500; color: #8a3a32; }
+.lv-banner__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.lv-banner__foot { margin-top: 10px; font-size: 11px; line-height: 15px; }
+
+.lv-banner .lv-btn { flex: 1 1 auto; background: #ffffff; color: #b3261e; box-shadow: inset 0 0 0 1px rgba(179, 38, 30, 0.4); }
+.lv-banner .lv-btn--primary { background: #b3261e; color: #ffffff; box-shadow: none; }
+
+/* White on #c0392b is 5.4:1 */
+.lv-banner--severe { background: #c0392b; box-shadow: none; color: #ffffff; }
+.lv-banner--severe .lv-banner__title,
+.lv-banner--severe .lv-banner__top .lv-bell { color: #ffffff; }
+.lv-banner--severe .lv-btn { background: transparent; color: #ffffff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8); }
+.lv-banner--severe .lv-btn--primary { background: #ffffff; color: #b3261e; box-shadow: none; }
+
+/* ---- Status header ------------------------------------------ */
+.lv-status__eyebrow { font-size: 12px; line-height: 16px; color: var(--text-400); }
+.lv-status__line {
+  margin-top: 4px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--text-900);
+}
+.lv-status__line.is-changed { animation: lv-in 0.32s ease-out; }
+.lv-status__updated {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--text-500);
+}
+/* A small live pulse while the visit is under way; it settles to grey
+   once Maa is home, because then nothing is happening any more. */
+.lv-status__updated::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2fd270;
+}
+.lv-status.is-ongoing .lv-status__updated::before { animation: lv-pulse 1.6s ease-in-out infinite; }
+.lv-status.is-settled .lv-status__updated::before { background: var(--text-200); }
+
+/* ---- Helper card --------------------------------------------- */
+.lv-helper { display: flex; flex-direction: column; gap: 14px; }
+.lv-helper__top { display: flex; align-items: center; gap: 12px; }
+.lv-helper__photo { width: 44px; height: 44px; display: block; flex: 0 0 auto; border-radius: 50%; background: #eef2ff; }
+.lv-helper__body { min-width: 0; }
+.lv-helper__name { font-size: 16px; font-weight: 500; line-height: 20px; color: var(--text-900); }
+.lv-helper__tags { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+
+.lv-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  line-height: 14px;
+  color: #0a5c2c;
+}
+.lv-verified svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.lv-tag {
+  height: 18px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-chip);
+  background: #fdf0f1;
+  font-size: 10px;
+  color: #9b2c34;
+  white-space: nowrap;
+}
+.lv-tag--backup { background: #eef2ff; color: #2c4fc7; }
+
+.lv-helper__actions { display: flex; gap: 10px; }
+
+.lv-btn {
+  flex: 1;
+  min-height: 40px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 22px;
+  background: #eaefff;
+  color: #1c1c1c;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.lv-btn svg { width: 15px; height: 15px; fill: currentColor; flex: 0 0 auto; }
+.lv-btn:active { transform: scale(0.98); }
+/* White on the app's #4d76ff is only 3.9:1 at this size; #3558d8 is the
+   same hue a step deeper and clears 4.5:1. */
+.lv-btn--primary { background: #3558d8; color: #ffffff; }
+.lv-btn--sm { flex: 0 0 auto; min-height: 32px; padding: 0 14px; font-size: 12px; }
+
+/* ---- Timeline ------------------------------------------------ */
+.lv-timeline { padding: 10px 12px 10px 10px; }
+.lv-steps { list-style: none; margin: 0; padding: 0; }
+
+.lv-step { position: relative; display: flex; gap: 8px; }
+
+/* Rail: a dot per stage, joined by a line that fills in blue as the
+   visit moves through it. */
+.lv-step__rail { position: relative; flex: 0 0 18px; }
+.lv-step::before {
+  content: "";
+  position: absolute;
+  left: 8.25px;
+  top: 27px;
+  bottom: -9px;
+  width: 1.5px;
+  background: #dfe4f2;
+  transition: background-color 0.4s ease;
+}
+.lv-step:last-child::before { display: none; }
+.lv-step.is-done::before { background: var(--blue); }
+
+.lv-dot {
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1.5px #cfd4e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.lv-dot__tick { width: 12px; height: 12px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; display: none; }
+.lv-step.is-done .lv-dot { background: var(--blue); box-shadow: none; }
+.lv-step.is-done .lv-dot__tick { display: block; }
+.lv-step.just-done .lv-dot__tick { animation: lv-pop 0.36s cubic-bezier(.3, 1.5, .5, 1); }
+.lv-step.is-current .lv-dot { box-shadow: inset 0 0 0 2px var(--blue); }
+.lv-step.is-current .lv-dot::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+.lv-step.just-current .lv-dot::after { animation: lv-pop 0.36s ease-out; }
+
+.lv-step__main {
+  flex: 1;
+  min-width: 0;
+  margin: 2px 0;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: transparent;
+  transition: background-color 0.35s ease;
+}
+.lv-step.is-current .lv-step__main { background: #eef2ff; }
+
+.lv-step__top { display: flex; align-items: center; gap: 5px; min-height: 18px; }
+.lv-step__name { font-size: 12px; font-weight: 500; line-height: 18px; color: var(--text-900); }
+.lv-step.is-current .lv-step__name { color: #2f55d4; }
+.lv-step.is-future .lv-step__name { font-weight: 400; color: #767676; }
+.lv-step__top .lv-bell { color: var(--text-500); }
+.lv-step.is-future .lv-bell { opacity: 0.6; }
+.lv-step__time { margin-left: auto; font-size: 11px; line-height: 18px; color: var(--text-500); white-space: nowrap; }
+
+.lv-step__body { margin-top: 2px; }
+.lv-step.is-future .lv-step__body,
+.lv-step.is-future .lv-step__time { display: none; }
+.lv-step.just-current .lv-step__body { animation: lv-in 0.32s ease-out; }
+.lv-step__text { font-size: 13px; line-height: 18px; color: var(--text-900); }
+.lv-step.is-done .lv-step__text { color: var(--text-700); }
+.lv-step__sub {
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  line-height: 15px;
+  color: #0a5c2c;
+}
+.lv-step__sub svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+
+/* ---- Map (On the way only) -----------------------------------
+   The helper's route to Maa's door, never Maa's position: the moment
+   she is picked up, this card goes away and only stage updates remain. */
+.lv-map { margin-top: 10px; }
+.lv-step:not(.is-current) .lv-map { display: none; }
+.lv-map__frame {
+  position: relative;
+  height: 128px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #eef1f6;
+  box-shadow: inset 0 0 0 0.5px #cfd8f2;
+}
+.lv-map__frame svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.lv-map__eta {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  height: 22px;
+  padding: 0 9px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 11px;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(21, 25, 31, 0.12);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-900);
+  white-space: nowrap;
+}
+.lv-map__pulse { transform-origin: center; transform-box: fill-box; animation: lv-ring 1.8s ease-out infinite; }
+.lv-map__cap { margin-top: 6px; font-size: 10px; line-height: 14px; color: var(--text-500); }
+
+/* ---- AI summary (Summary ready) ------------------------------ */
+.lv-sum {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 0.5px #c3d1ff;
+}
+.lv-sum__label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: 0.02em;
+  color: #2c4fc7;
+}
+.lv-sum__label svg { width: 12px; height: 12px; fill: currentColor; }
+.lv-sum__list { margin: 8px 0 0; padding: 0; list-style: disc; font-size: 12px; color: var(--text-900); }
+.lv-sum__list li { margin-left: 16px; line-height: 18px; }
+.lv-sum__list li + li { margin-top: 4px; }
+.lv-sum__link {
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: #2c4fc7;
+  cursor: pointer;
+}
+.lv-sum__link::after { content: "\203A"; font-size: 15px; line-height: 1; }
+
+.lv-follow {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 0.5px solid #bfd0ff;
+}
+.lv-follow__q { font-size: 12px; font-weight: 500; line-height: 17px; color: var(--text-900); }
+.lv-follow__actions { display: flex; gap: 8px; margin-top: 8px; }
+.lv-follow__done { display: flex; align-items: center; gap: 6px; font-size: 12px; line-height: 17px; color: #0a5c2c; animation: lv-in 0.3s ease-out; }
+.lv-follow__done svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+
+/* ---- Questions ---------------------------------------------- */
+.lv-qs { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.lv-q { display: flex; align-items: flex-start; gap: 10px; }
+.lv-q__box {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px #cfd4e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.lv-q__box svg { width: 11px; height: 11px; fill: none; stroke: #ffffff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; display: none; }
+.lv-q.is-asked .lv-q__box { background: #0b9241; box-shadow: none; }
+.lv-q.is-asked .lv-q__box svg { display: block; }
+.lv-q.just-asked .lv-q__box svg { animation: lv-pop 0.36s cubic-bezier(.3, 1.5, .5, 1); }
+.lv-q__text { font-size: 13px; line-height: 20px; color: var(--text-900); }
+.lv-q__when { font-size: 10px; line-height: 14px; color: #0a5c2c; }
+
+/* ---- Spent so far -------------------------------------------- */
+.lv-spend__total { font-size: 22px; font-weight: 500; line-height: 28px; color: var(--text-900); }
+.lv-spend__by { margin-top: 2px; }
+.lv-spend__list { list-style: none; margin: 8px 0 0; padding: 0; }
+.lv-spend__list:empty { display: none; }
+.lv-spend__list li + li { border-top: 0.5px solid #e3e8f7; }
+.lv-spend__row {
+  width: 100%;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.lv-spend__row.is-new { animation: lv-in 0.32s ease-out; }
+.lv-spend__label { flex: 1; font-size: 13px; color: var(--text-900); }
+.lv-spend__time { font-size: 10px; color: var(--text-500); }
+.lv-spend__amt { font-size: 13px; font-weight: 500; color: var(--text-900); }
+.lv-spend__row img { width: 6px; height: 11px; display: block; opacity: 0.7; }
+
+.lv-reason { padding-bottom: 4px; font-size: 11px; line-height: 15px; color: var(--text-400); }
+
+/* ---- Receipt / prescription sheet ----------------------------- */
+.lv-doc__eyebrow { font-size: 11px; line-height: 14px; color: var(--text-500); margin-bottom: 2px; }
+.lv-doc__rows { margin: 12px 0 0; display: grid; grid-template-columns: 84px 1fr; row-gap: 6px; }
+.lv-doc__rows dt { font-size: 11px; line-height: 17px; color: var(--text-500); }
+.lv-doc__rows dd { margin: 0; font-size: 12px; line-height: 17px; color: var(--text-900); }
+.lv-doc__photo {
+  margin-top: 14px;
+  height: 150px;
+  padding: 18px 22px;
+  border-radius: 12px;
+  background: #f4f6fb;
+  box-shadow: inset 0 0 0 1px #e1e6f2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lv-doc__photo span { height: 7px; border-radius: 4px; background: #dde3f0; }
+.lv-doc__photo span.is-short { width: 55%; }
+.lv-doc__photo p { margin-top: auto; font-size: 10px; line-height: 13px; color: var(--text-500); text-align: center; }
+
+/* ---- Toast (calls, which a prototype can't actually place) ---- */
+.lv-toast[hidden] { display: none; }
+.lv-toast {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 84px;
+  z-index: 8;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: #ececf2;
+  color: #3a3a3a;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(21, 25, 31, 0.12);
+  animation: lv-in 0.25s ease-out;
+}
+
+/* ---- Demo controls ------------------------------------------- */
+.demo[hidden] { display: none; }
+.demo {
+  position: absolute;
+  right: 12px;
+  bottom: 80px;
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.demo__pill {
+  height: 26px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 13px;
+  background: rgba(28, 28, 28, 0.55);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+.demo__pill:hover,
+.demo__pill[aria-expanded="true"] { opacity: 1; }
+
+.demo__panel[hidden] { display: none; }
+.demo__panel {
+  width: 236px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(21, 25, 31, 0.2), inset 0 0 0 0.5px #d7def0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: lv-in 0.2s ease-out;
+}
+.demo__stage { font-size: 12px; font-weight: 500; line-height: 16px; color: var(--text-900); }
+.demo__row { display: flex; gap: 6px; }
+.demo__btn,
+.demo__reset,
+.demo__select {
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.demo__btn { flex: 1; background: #eaefff; color: #1c1c1c; }
+.demo__btn--next { background: #3558d8; color: #ffffff; }
+.demo__btn:disabled { opacity: 0.4; cursor: default; }
+.demo__label { margin-top: 2px; font-size: 10px; color: var(--text-500); }
+.demo__select { width: 100%; padding: 0 8px; background: #f4f6fb; color: var(--text-900); box-shadow: inset 0 0 0 0.5px #cfd8f2; }
+.demo__reset { height: 26px; background: none; color: #c0392b; }
+
+/* ---- Motion --------------------------------------------------- */
+@keyframes lv-in    { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes lv-pop   { from { transform: scale(0.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes lv-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+@keyframes lv-ring  { from { transform: scale(0.6); opacity: 0.55; } to { transform: scale(2.2); opacity: 0; } }
+
+/* Motion is keyed to transient just-* classes that render() adds only
+   for what changed while you watched, so a page opened straight at
+   ?stage=6 paints still. This guard stops the colour transitions from
+   playing on that first paint as well. */
+.lv.no-anim *,
+.lv.no-anim *::before,
+.lv.no-anim *::after { animation: none !important; transition: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lv *, .lv *::before, .lv *::after, .demo__panel, .lv-toast { animation: none !important; transition: none !important; }
+}

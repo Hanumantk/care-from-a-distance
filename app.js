@@ -25,6 +25,27 @@
   /* Seed visits live in code, not storage, so "delete" can't just splice
      a list. It records the id here and allVisits() filters it out. */
   var K_DELETED = 'pha.deleted.v1';
+  /* The visit-in-progress demo: which stage the 24 OCT visit has reached
+     and whether something has gone wrong. Shared so Home's card chip can
+     follow the same state the visit page shows. */
+  var K_LIVE = 'pha.live.v1';
+  var LIVE_ID = 'seed-1';
+
+  /* Chip copy, one per stage (index 0 = not started). Short enough for
+     the 20px status chip on Home. */
+  var LIVE_CHIP = ['', 'Pickup tomorrow', 'Helper on the way', 'Picked up',
+                   'At hospital', 'With doctor', 'After doctor', 'Maa is home',
+                   'Summary ready'];
+  var ISSUES = ['none', 'helper-late', 'doctor-absent', 'not-ready', 'emergency'];
+  var ISSUE_CHIP = { 'helper-late': 'Helper late', 'doctor-absent': 'Doctor absent',
+                     'not-ready': 'Maa not ready', 'emergency': 'Emergency' };
+
+  function cleanLive(s) {
+    s = s || {};
+    var stage = Math.max(0, Math.min(LIVE_CHIP.length - 1, parseInt(s.stage, 10) || 0));
+    var issue = ISSUES.indexOf(s.issue) === -1 ? 'none' : s.issue;
+    return { stage: stage, issue: stage ? issue : 'none', approved: !!(stage && s.approved) };
+  }
 
   /* ---- storage, defensively ------------------------------------
      localStorage throws in private mode and can be disabled outright,
@@ -140,9 +161,12 @@
       /* Everything below is already stated somewhere in the designs: the
          helper and tests on the 28 Sep follow-up card (4:341), the rest
          on the Add-visit form. */
-      helperName: 'Suresh Patil', helperType: 'Escort to hospital', gender: 'Female',
-      pickup: '10:15 am', address: '12 Shivaji Nagar, Garkheda',
-      questions: [{ text: 'BP rising in the last 2 weeks, is 80 mg enough?', by: 'You' }],
+      helperName: 'Sunita', helperType: 'Escort to hospital', gender: 'Female',
+      pickup: '8:30 am', address: '12 Shivaji Nagar, Garkheda',
+      /* Helper, pickup and questions match the visit-in-progress flow on
+         upcoming-visit.html, so the booking and the live view agree. */
+      questions: [{ text: 'Ask about knee pain', by: 'You' },
+                  { text: 'Is the BP tablet dose still right?', by: 'You' }],
       tests: ['HbA1c', 'Kidney function'],
       buyMeds: true, notified: ['Hanu', 'Abhishek'] },
     { id: 'seed-2', date: '2026-09-28', time: '', hospital: 'Hedgewar hospital',
@@ -209,6 +233,10 @@
       if (gone.indexOf(id) === -1) { gone.push(id); write(K_DELETED, gone); }
       return true;
     },
-    resetAll: function () { drop(K_VISITS); drop(K_DRAFT); drop(K_DELETED); }
+    LIVE_ID: LIVE_ID, LIVE_CHIP: LIVE_CHIP, ISSUES: ISSUES, ISSUE_CHIP: ISSUE_CHIP,
+    cleanLive: cleanLive,
+    getLive: function () { return cleanLive(read(K_LIVE)); },
+    setLive: function (s) { s = cleanLive(s); write(K_LIVE, s); return s; },
+    resetAll: function () { drop(K_VISITS); drop(K_DRAFT); drop(K_DELETED); drop(K_LIVE); }
   };
 })();

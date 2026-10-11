@@ -137,6 +137,21 @@
   white-space: nowrap;
 }
 
+/* While the 24 OCT visit is under way the chip names the stage instead
+   ("With doctor"). Those labels vary in length, so it anchors to the
+   card's right edge (345 - 325 = 20) rather than to x 224. Blue while
+   things are moving (5.9:1), red when something needs Hanu (5.7:1). */
+.chip--live { left: auto; right: 20px; background: #e8eeff; }
+.chip--live .chip__label { width: auto; color: #2c4fc7; }
+.chip--live.is-settled { background: #e6f9ee; }
+.chip--live.is-settled .chip__label { color: #0a5c2c; }
+.chip--live.is-issue { background: #fdeceb; }
+.chip--live.is-issue .chip__label { color: #b3261e; }
+
+.visit-card__link { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.visit-card__link:focus-visible { outline: 2px solid #0462d3; outline-offset: -2px; }
+.visit-card:has(.visit-card__link:active) { transform: scale(0.99); }
+
 .visit-card__date {
   position: absolute;
   left: 20px;

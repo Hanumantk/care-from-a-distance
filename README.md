@@ -48,7 +48,7 @@ to show the 393 frame at 1:1 and blowing it up 2x would look broken.
 |---|---|
 | `index.html` | Home — today's status, upcoming visit, vitals |
 | `visits.html` | Visits — upcoming and past, newest first |
-| `upcoming-visit.html` | An upcoming visit in full, with a delete option |
+| `upcoming-visit.html` | An upcoming visit in full, with a delete option — and, on the day, the visit in progress |
 | `visit-detail.html` | A past visit: summary, findings, prescription, recording |
 | `medicine.html` | Medicine — schedule and the full tablet list |
 | `settings.html` | Settings — care circle, preferences |
@@ -77,6 +77,29 @@ The prototype is stateful, not a set of static mockups:
 State lives in `localStorage` under `pha.*` keys, with a try/catch fallback to
 memory so private-browsing mode degrades rather than breaks. `PHA.resetAll()`
 in the console returns everything to the designed state.
+
+### Visit in progress
+
+From the day before, the 24 OCT visit stops being a booking and becomes a
+status board Hanu can glance at once: the current stage in one line, the
+helper with one-tap calls, an eight-stage timeline, the questions ticked
+off as they are asked, and a running total with receipts. Four exceptions
+(helper late, doctor absent, Maa not ready, emergency) arrive as a red
+banner above everything else. Maa's location is never shown: the only map
+is the helper's route to her door, and it goes away at pickup.
+
+Home's upcoming card opens this page, and its chip follows the stage.
+
+For presenting, a small **Demo** pill in the corner steps through stages
+(or use ← and →) and picks an exception. The state is in the URL, so any
+moment opens directly:
+
+```
+upcoming-visit.html?id=seed-1&stage=5&issue=none
+```
+
+`stage` runs 0 (not started) to 8; `issue` is one of `none`,
+`helper-late`, `doctor-absent`, `not-ready`, `emergency`.
 
 ---
 

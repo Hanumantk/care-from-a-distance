@@ -88,7 +88,7 @@
            <div class="uv-helper__top">
              <img class="uv-helper__avatar" src="assets/set-avatar.svg" alt="" />
              <div class="uv-helper__body">
-               <p class="uv-helper__name" id="helperName">Suresh Patil</p>
+               <p class="uv-helper__name" id="helperName">Sunita</p>
                <p class="uv-helper__role" id="helperRole">Escort to hospital</p>
              </div>
              <span class="uv-helper__badge">Assigned</span>
@@ -98,7 +98,7 @@
 
            <div class="uv-helper__row">
              <p class="uv-helper__k">Picks up at</p>
-             <p class="uv-helper__v" id="pickup">10:15 am</p>
+             <p class="uv-helper__v" id="pickup">8:30 am</p>
            </div>
            <div class="uv-helper__row">
              <p class="uv-helper__k">From</p>
@@ -116,7 +116,8 @@
        <section class="uv-block" id="questionsBlock">
          <p class="uv-block__label">Questions for the doctor</p>
          <ol class="uv-qlist" id="questions">
-           <li>&ldquo;BP rising in the last 2 weeks, is 80 mg enough?&rdquo;</li>
+           <li>&ldquo;Ask about knee pain&rdquo;</li>
+           <li>&ldquo;Is the BP tablet dose still right?&rdquo;</li>
          </ol>
          <p class="uv-sub">Aai can add her own before the visit &mdash; they appear here too.</p>
        </section>
@@ -151,6 +152,68 @@
 
      </div><!-- /.uv-body -->
 
+     <!-- ── Visit in progress ──────────────────────────────────
+          Replaces the header detail and the body above from the day
+          before the visit onwards. Built for one glance: the stage, who
+          has Maa, what has happened, what it cost. upcoming-visit.js
+          fills it; the stage list itself lives there. -->
+     <div class="lv" id="live" hidden>
+
+       <div class="lv-banner" id="lvBanner" role="alert" hidden></div>
+
+       <header class="lv-status">
+         <p class="lv-status__eyebrow" id="lvEyebrow">Today &middot; Hedgewar hospital</p>
+         <p class="lv-status__line" id="lvLine">With Dr Deshmukh</p>
+         <p class="lv-status__updated" id="lvUpdated">Updated 10:05 am</p>
+       </header>
+
+       <section class="lv-card lv-helper" aria-label="Helper">
+         <div class="lv-helper__top">
+           <img class="lv-helper__photo" src="assets/set-avatar.svg" alt="" />
+           <div class="lv-helper__body">
+             <p class="lv-helper__name" id="lvHelperName">Sunita</p>
+             <div class="lv-helper__tags">
+               <span class="lv-verified"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5" /></svg>Verified</span>
+               <span class="lv-tag" id="lvHelperTag">Favourite</span>
+             </div>
+           </div>
+         </div>
+         <div class="lv-helper__actions">
+           <button class="lv-btn lv-btn--primary" type="button" id="lvCallHelper" data-call="Sunita">
+             <svg viewBox="0 0 256 256" aria-hidden="true"><path id="lvPhone" d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z" /></svg>
+             <span id="lvCallHelperLabel">Call Sunita</span>
+           </button>
+           <button class="lv-btn" type="button" data-call="Maa">
+             <svg viewBox="0 0 256 256" aria-hidden="true"><use href="#lvPhone" /></svg>
+             <span>Call Maa</span>
+           </button>
+         </div>
+       </section>
+
+       <section class="lv-card lv-timeline" aria-label="Visit stages">
+         <ol class="lv-steps" id="lvSteps"></ol>
+       </section>
+
+       <section class="lv-block">
+         <p class="lv-block__label">Questions for the doctor</p>
+         <div class="lv-card">
+           <ul class="lv-qs" id="lvQuestions"></ul>
+           <p class="lv-note" id="lvQNote">Sunita ticks each one when she asks it.</p>
+         </div>
+       </section>
+
+       <section class="lv-block">
+         <p class="lv-block__label">Spent so far</p>
+         <div class="lv-card lv-spend">
+           <p class="lv-spend__total" id="lvTotal">&#8377;0</p>
+           <p class="lv-note lv-spend__by" id="lvSpendBy">Nothing spent yet</p>
+           <ul class="lv-spend__list" id="lvSpend"></ul>
+         </div>
+       </section>
+
+       <p class="lv-reason">Reason &middot; <span id="lvReason">Monthly follow up appointment</span></p>
+     </div><!-- /.lv -->
+
     </div><!-- /.screen__canvas -->
    </div><!-- /.screen__scroll -->
 
@@ -162,7 +225,7 @@
       <div class="uv-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
         <p class="uv-sheet__title" id="sheetTitle">Delete this visit?</p>
         <p class="uv-sheet__body" id="sheetBody">
-          The 24 OCT appointment will be removed. Suresh Patil and the Care Circle
+          The 24 OCT appointment will be removed. Sunita and the Care Circle
           will be told it is cancelled.
         </p>
         <div class="uv-sheet__actions">
@@ -170,6 +233,50 @@
           <button class="uv-sheet__btn uv-sheet__btn--del" id="confirmDelete" type="button">Delete</button>
         </div>
       </div>
+    </div>
+
+    <!-- Receipts and the prescription open here: a photo the helper
+         uploaded, with the facts that matter above it. -->
+    <div class="uv-sheet" id="docSheet" hidden>
+      <div class="uv-sheet__scrim" data-close-doc></div>
+      <div class="uv-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="docTitle">
+        <p class="lv-doc__eyebrow" id="docEyebrow">Receipt</p>
+        <p class="uv-sheet__title" id="docTitle">Medicines</p>
+        <dl class="lv-doc__rows" id="docRows"></dl>
+        <div class="lv-doc__photo" aria-hidden="true">
+          <span></span><span></span><span></span><span class="is-short"></span>
+          <p id="docPhotoLabel">Photo uploaded by Sunita</p>
+        </div>
+        <div class="uv-sheet__actions">
+          <button class="uv-sheet__btn uv-sheet__btn--keep" type="button" data-close-doc>Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lv-toast" id="lvToast" role="status" aria-live="polite" hidden></div>
+
+    <!-- Presenter controls. Not part of the design: a quiet pill in the
+         corner that steps the visit through its stages and exceptions.
+         The state is also in the URL, so any moment can be opened
+         directly: ?id=seed-1&stage=5&issue=none -->
+    <div class="demo" id="demo" hidden>
+      <div class="demo__panel" id="demoPanel" hidden>
+        <p class="demo__stage" id="demoStage">Not started</p>
+        <div class="demo__row">
+          <button class="demo__btn" type="button" id="demoPrev">Previous stage</button>
+          <button class="demo__btn demo__btn--next" type="button" id="demoNext">Next stage</button>
+        </div>
+        <label class="demo__label" for="demoIssue">Exception</label>
+        <select class="demo__select" id="demoIssue">
+          <option value="none">None</option>
+          <option value="helper-late">Helper late</option>
+          <option value="doctor-absent">Doctor absent</option>
+          <option value="not-ready">Maa not ready</option>
+          <option value="emergency">Emergency</option>
+        </select>
+        <button class="demo__reset" type="button" id="demoReset">Reset</button>
+      </div>
+      <button class="demo__pill" type="button" id="demoPill" aria-expanded="false" aria-controls="demoPanel">Demo</button>
     </div>
 
     <!-- Tab bar — "Navigation bar reports selected" (4:785), since this
