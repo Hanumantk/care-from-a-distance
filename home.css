@@ -240,6 +240,26 @@
   color: var(--text-600);
 }
 
+/* BP over target replaces the all-clear line. The icon takes the 24px
+   gutter slot and the headline shifts right by its width + 6. #c0392b is
+   the same accessible red as the Delete control (4.6:1 on #f2f5ff). */
+.status__icon {
+  position: absolute;
+  left: 24px;
+  top: 350px;
+  width: 18px;
+  height: 18px;
+  fill: #c0392b;
+}
+
+.status__sub--alert { width: 345px; }
+
+.status__headline--alert {
+  left: 48px;
+  width: 321px;
+  color: #c0392b;
+}
+
 /* ---- Vitals ------------------------------------------------ */
 .vital {
   background: var(--surface-vital);
