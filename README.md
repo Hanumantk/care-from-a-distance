@@ -43,7 +43,8 @@ to show the 393 frame at 1:1 and blowing it up 2x would look broken.
 ### Screenshots
 
 On a laptop or tablet, the camera button in the top-right corner of the
-page saves the current screen, in its iPhone frame, as a PNG
+page saves the current screen, in its iPhone frame on a transparent
+background, as a PNG
 (`care-from-a-distance-<screen>-<time>.png`). It keeps the scroll
 position and any open sheet. It sits outside the phone, never on the app,
 so it hides on windows narrower than 540px and on phones. Use the phone's

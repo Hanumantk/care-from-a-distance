@@ -14,8 +14,11 @@
   'use strict';
 
   var LIB = 'https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js';
-  var PAD = 40;                 // room around the phone for its shadow
-  var BG = '#eef1f8';           // the page colour behind the device
+  /* The PNG is the phone alone on a transparent ground: no page colour,
+     no drop shadow (on a slide or a dark board a baked-in shadow reads as
+     a grey smudge). PAD only leaves room for the side buttons, which sit
+     2px outside the bezel. */
+  var PAD = 4;
 
   var CAMERA = '<svg viewBox="0 0 256 256" aria-hidden="true"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.71,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,0,1,8-8H80a8,8,0,0,0,6.66-3.56L100.28,48h55.43l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"/></svg>';
 
@@ -119,13 +122,21 @@
       })
       .then(function (css) {
         var w = device.offsetWidth, h = device.offsetHeight;
+        // width/height size the picture, but the library also writes them
+        // onto the device itself; style runs after, so it pins the device
+        // back to its real size inside the slightly larger picture.
         return window.htmlToImage.toBlob(device, {
           fontEmbedCSS: css,
           pixelRatio: 2,
-          backgroundColor: BG,
           width: w + PAD * 2,
           height: h + PAD * 2,
-          style: { margin: PAD + 'px', transform: 'none' },
+          style: {
+            margin: PAD + 'px',
+            width: w + 'px',
+            height: h + 'px',
+            transform: 'none',
+            boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.10) inset'
+          },
           // The Demo pill is for whoever is presenting, not the design.
           filter: function (node) {
             return !(node.classList && node.classList.contains('demo'));
