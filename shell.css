@@ -375,3 +375,38 @@ body {
   .screen__canvas,
   .tabbar { width: 100%; }
 }
+
+/* ============================================================
+   Screenshot button (snap.js) — a presenter tool. It lives in the page
+   corner, outside the phone, so it never sits on the app or appears in
+   its own pictures. Below 540px wide there's no room beside the 415px
+   phone (16 + 40 + 16 each side), and on a real phone the app is the
+   whole screen, so it hides rather than cover the design.
+   ============================================================ */
+.snap-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
+  color: #3a3a3a;
+  box-shadow: 0 2px 10px rgba(20, 28, 60, 0.16), inset 0 0 0 0.5px rgba(77, 118, 255, 0.35);
+  cursor: pointer;
+}
+.snap-btn svg { width: 20px; height: 20px; fill: currentColor; display: block; }
+.snap-btn:hover { color: var(--blue); }
+.snap-btn:active { transform: scale(0.94); }
+.snap-btn:focus-visible { outline: 2px solid #0462d3; outline-offset: 2px; }
+.snap-btn[aria-busy="true"] { opacity: 0.5; cursor: progress; }
+
+@media (max-width: 539px) {
+  .snap-btn { display: none; }
+}
