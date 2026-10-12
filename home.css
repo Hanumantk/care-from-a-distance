@@ -388,7 +388,7 @@
 }
 
 .vital--bp .vital__target-label { left: 149px; top: 45px; width: 36px; color: var(--on-blue-title); }
-.vital--bp .vital__target-value { left: 149px; top: 59px; width: 38px; color: #f2f2f2; }
+.vital--bp .vital__target-value { left: 149px; top: 59px; width: 38px; color: #ffffff; }
 
 .vital--sugar .vital__target-label { left: 134px; top: 45px; width: 36px; color: var(--on-blue-title); }
 .vital--sugar .vital__target-value { left: 134px; top: 59px; width: 41px; color: #f2f2f2; }
@@ -407,17 +407,26 @@
 .vital__target .vital__target-label,
 .vital__target .vital__target-value { position: relative; left: auto; top: auto; width: 38px; }
 
-/* Trend arrow — BP only. The SVG is drawn in #3a3a3a; on the filled
-   card it is turned white to match the target value beside it. */
+/* Trend arrow — BP only, in red because the reading is over target.
+   Red straight on the brand blue measures 1.04:1 (the two are almost
+   the same luminance), so the arrow sits on a 16px white disc: #c0392b
+   on white is 5.4:1, and the disc on the blue is 3.9:1.
+
+   Vertically it is centred on the target digits, not the line box: the
+   "130/80" digits run from 63 to 72 (baseline 72), centre 67.5, and so
+   does the disc. The 12px glyph inside spans the same 63-72. 5px clear
+   of the text, as before. */
 .vital__trend {
   position: absolute;
-  left: 134px;
-  top: 62px;
-  width: 12px;
-  height: 12px;
+  left: 128px;
+  top: 57.5px;
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+  border-radius: 50%;
+  background: #ffffff;
   display: block;
 }
-.vital.is-filled .vital__trend { filter: brightness(0) invert(0.95); }
 
 /* ---- Medicine log ----------------------------------------- */
 .medicine {
