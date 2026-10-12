@@ -286,8 +286,8 @@
 .vital--sugar      { left: 24px;  top: 590px; width: 197px; height: 117px; }
 .vital--creatinine { left: 237px; top: 590px; width: 132px; height: 117px; }
 
-/* Movement and Sugar are filled with the brand blue; their text
-   inverts to the on-blue ramp. */
+/* BP, Movement and Sugar are filled with the brand blue; their text
+   inverts to the on-blue ramp. Creatinine stays white. */
 .vital.is-filled { background: var(--blue); }
 
 .vital__title {
@@ -387,8 +387,8 @@
   white-space: nowrap;
 }
 
-.vital--bp .vital__target-label { left: 149px; top: 45px; width: 36px; }
-.vital--bp .vital__target-value { left: 149px; top: 59px; width: 38px; }
+.vital--bp .vital__target-label { left: 149px; top: 45px; width: 36px; color: var(--on-blue-title); }
+.vital--bp .vital__target-value { left: 149px; top: 59px; width: 38px; color: #f2f2f2; }
 
 .vital--sugar .vital__target-label { left: 134px; top: 45px; width: 36px; color: var(--on-blue-title); }
 .vital--sugar .vital__target-value { left: 134px; top: 59px; width: 41px; color: #f2f2f2; }
@@ -407,7 +407,8 @@
 .vital__target .vital__target-label,
 .vital__target .vital__target-value { position: relative; left: auto; top: auto; width: 38px; }
 
-/* Trend arrow — BP only */
+/* Trend arrow — BP only. The SVG is drawn in #3a3a3a; on the filled
+   card it is turned white to match the target value beside it. */
 .vital__trend {
   position: absolute;
   left: 134px;
@@ -416,6 +417,7 @@
   height: 12px;
   display: block;
 }
+.vital.is-filled .vital__trend { filter: brightness(0) invert(0.95); }
 
 /* ---- Medicine log ----------------------------------------- */
 .medicine {
